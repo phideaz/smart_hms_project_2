@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wordpress_api/pages/form_rumah_page.dart';
 import 'package:flutter_wordpress_api/services/shared_service.dart';
 
 class HomePage extends StatelessWidget {
@@ -24,8 +25,40 @@ class HomePage extends StatelessWidget {
         ]
       ),
       backgroundColor: Colors.grey[200],
-      body: Center(
-        child: Text("Smart HMS Dashboard"),
+      body: ListView(
+        children: [
+          Column(
+            children: [
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> FormRumahPage()));
+                    },
+                    child: Container(
+                      width: 100,
+                      margin: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 60,
+                            color: Colors.grey.withOpacity(0.2),
+                          ),
+                          SizedBox(height: 8,),
+                          Text(
+                            "Rumah"
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )
+            ],
+          )
+        ],
       )
     );
   }
