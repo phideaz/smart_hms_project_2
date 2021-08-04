@@ -686,9 +686,6 @@ class _FormRumahPageState extends State<FormRumahPage> {
                         height: 8,
                       ),
                       TextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.art_track_sharp),
                             border: OutlineInputBorder(
@@ -1887,29 +1884,29 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               //sendDataToDB(rumah);
                               Rumah newData = Rumah(
                                   provinsi: selectedProvinsi,
-                                  kabupaten: selectedKabupaten,
+                                  kabupatenKota: selectedKabupaten,
                                   kecamatan: selectedKecamatan,
-                                  kelurahan: selectedKelurahan,
+                                  kelurahanDesa: selectedKelurahan,
                                   rw: rwController.text,
                                   rt: rtController.text,
                                   nomorRumah: nomorRumahController.text,
                                   jalan: jalanController.text,
-                                  lorong: lorongController.text,
+                                  lorongGang: lorongController.text,
                                   koordinatX: koordinatXController.text,
                                   koordinatY: koordinatYController.text,
-                                  namaKk: namaKKController.text,
+                                  namaKkPemilikRumah: namaKKController.text,
                                   pekerjaan: selectedPekerjaan,
-                                  idKtp: idKTPController.text,
+                                  idKtpkkKepalaRumahTangga: idKTPController.text,
                                   jumlahKk: jumlahKKController.text,
-                                  jumlahPenghuni: jumlahPenghuniController.text,
+                                  jumlahPenghuniRumah: jumlahPenghuniController.text,
                                   fungsiBangunan: selectedFungsiBangunan,
-                                  jumlahLantai: selectedJumlahLntaiBangunan,
+                                  jumlahLantaiBangunan: selectedJumlahLntaiBangunan,
                                   jenisBangunan: selectedJenisBangunan,
                                   statusKepemilikanRumah:
                                   selectedStatusKepemilikanRumah,
                                   statusKepemilikanTanah:
                                   selectedStatusKepemilikanTanah,
-                                  penghasilan: penghasilanController.text,
+                                  penghasilanRupiah: penghasilanController.text,
                                   materialAtap: selectedMaterialAtap,
                                   kondisiAtap: selectedKondisiAtap,
                                   materialLantai: selectedMaterialLantai,
@@ -1918,17 +1915,17 @@ class _FormRumahPageState extends State<FormRumahPage> {
                                   kondisiMaterial: selectedKondisiMaterial,
                                   kondisiRumah: selectedKondisiRumah,
                                   pondasi: selectedPondasi,
-                                  luasBangunan: luasBangunanController.text,
+                                  luasBangunanMeter: luasBangunanController.text,
                                   sumberListrik: selectedSubmerListrik,
                                   sumberAir: selectedSubmerAir,
-                                  jarakSumberkeAir: jarakSumberAirController.text,
+                                  jarakSumberAirKePembuanganMeter: jarakSumberAirController.text,
                                   sanitasi: selectedSanitasi,
                                   persampahan: selectedPersampahan,
                                   email: emailController.text,
-                                  gambarDepan: _imageTampakDepan.toString(),
-                                  gambarKanan: _imageTampakKanan.toString(),
-                                  gambarKiri: _imageTampakKiri.toString(),
-                                  gambarBelakang: _imageTampakBelakang.toString());
+                                  gambarRumahTampakDepan: _imageTampakDepan.toString(),
+                                  gambarRumahTampakKanan: _imageTampakKanan.toString(),
+                                  gambarRumahTampakKiri: _imageTampakKiri.toString(),
+                                  gambarRumahTampakBelakang: _imageTampakBelakang.toString());
                               rumah.add(newData);
                               String oldData = Rumah.encode(rumah);
 
@@ -1944,29 +1941,29 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               final String encodedData = Rumah.encode([
                                 Rumah(
                                     provinsi: selectedProvinsi,
-                                    kabupaten: selectedKabupaten,
+                                    kabupatenKota: selectedKabupaten,
                                     kecamatan: selectedKecamatan,
-                                    kelurahan: selectedKelurahan,
+                                    kelurahanDesa: selectedKelurahan,
                                     rw: rwController.text,
                                     rt: rtController.text,
                                     nomorRumah: nomorRumahController.text,
                                     jalan: jalanController.text,
-                                    lorong: lorongController.text,
+                                    lorongGang: lorongController.text,
                                     koordinatX: koordinatXController.text,
                                     koordinatY: koordinatYController.text,
-                                    namaKk: namaKKController.text,
+                                    namaKkPemilikRumah: namaKKController.text,
                                     pekerjaan: selectedPekerjaan,
-                                    idKtp: idKTPController.text,
+                                    idKtpkkKepalaRumahTangga: idKTPController.text,
                                     jumlahKk: jumlahKKController.text,
-                                    jumlahPenghuni: jumlahPenghuniController.text,
+                                    jumlahPenghuniRumah: jumlahPenghuniController.text,
                                     fungsiBangunan: selectedFungsiBangunan,
-                                    jumlahLantai: selectedJumlahLntaiBangunan,
+                                    jumlahLantaiBangunan: selectedJumlahLntaiBangunan,
                                     jenisBangunan: selectedJenisBangunan,
                                     statusKepemilikanRumah:
                                     selectedStatusKepemilikanRumah,
                                     statusKepemilikanTanah:
                                     selectedStatusKepemilikanTanah,
-                                    penghasilan: penghasilanController.text,
+                                    penghasilanRupiah: penghasilanController.text,
                                     materialAtap: selectedMaterialAtap,
                                     kondisiAtap: selectedKondisiAtap,
                                     materialLantai: selectedMaterialLantai,
@@ -1975,17 +1972,17 @@ class _FormRumahPageState extends State<FormRumahPage> {
                                     kondisiMaterial: selectedKondisiMaterial,
                                     kondisiRumah: selectedKondisiRumah,
                                     pondasi: selectedPondasi,
-                                    luasBangunan: luasBangunanController.text,
+                                    luasBangunanMeter: luasBangunanController.text,
                                     sumberListrik: selectedSubmerListrik,
                                     sumberAir: selectedSubmerAir,
-                                    jarakSumberkeAir: jarakSumberAirController.text,
+                                    jarakSumberAirKePembuanganMeter: jarakSumberAirController.text,
                                     sanitasi: selectedSanitasi,
                                     persampahan: selectedPersampahan,
                                     email: emailController.text,
-                                    gambarDepan: _imageTampakDepan.toString(),
-                                    gambarKanan: _imageTampakKanan.toString(),
-                                    gambarKiri: _imageTampakKiri.toString(),
-                                    gambarBelakang: _imageTampakBelakang.toString())
+                                    gambarRumahTampakDepan: _imageTampakDepan.toString(),
+                                    gambarRumahTampakKanan: _imageTampakKanan.toString(),
+                                    gambarRumahTampakKiri: _imageTampakKiri.toString(),
+                                    gambarRumahTampakBelakang: _imageTampakBelakang.toString())
                               ]);
 
                               await prefs.setString('rumah_survey', encodedData);

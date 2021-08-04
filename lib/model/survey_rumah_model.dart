@@ -6,27 +6,27 @@ import 'dart:io';
 class Rumah {
   Rumah({
     this.provinsi,
-    this.kabupaten,
+    this.kabupatenKota,
     this.kecamatan,
-    this.kelurahan,
+    this.kelurahanDesa,
     this.rw,
     this.rt,
     this.nomorRumah,
     this.jalan,
-    this.lorong,
+    this.lorongGang,
     this.koordinatX,
     this.koordinatY,
-    this.namaKk,
+    this.namaKkPemilikRumah,
     this.pekerjaan,
-    this.idKtp,
+    this.idKtpkkKepalaRumahTangga,
     this.jumlahKk,
-    this.jumlahPenghuni,
+    this.jumlahPenghuniRumah,
     this.fungsiBangunan,
-    this.jumlahLantai,
+    this.jumlahLantaiBangunan,
     this.jenisBangunan,
     this.statusKepemilikanRumah,
     this.statusKepemilikanTanah,
-    this.penghasilan,
+    this.penghasilanRupiah,
     this.materialAtap,
     this.kondisiAtap,
     this.materialLantai,
@@ -35,41 +35,41 @@ class Rumah {
     this.kondisiMaterial,
     this.kondisiRumah,
     this.pondasi,
-    this.luasBangunan,
+    this.luasBangunanMeter,
     this.sumberListrik,
     this.sumberAir,
-    this.jarakSumberkeAir,
+    this.jarakSumberAirKePembuanganMeter,
     this.sanitasi,
     this.persampahan,
     this.email,
-    this.gambarDepan,
-    this.gambarKanan,
-    this.gambarKiri,
-    this.gambarBelakang,
+    this.gambarRumahTampakDepan,
+    this.gambarRumahTampakKanan,
+    this.gambarRumahTampakKiri,
+    this.gambarRumahTampakBelakang,
   });
 
   String provinsi;
-  String kabupaten;
+  String kabupatenKota;
   String kecamatan;
-  String kelurahan;
+  String kelurahanDesa;
   String rw;
   String rt;
   String nomorRumah;
   String jalan;
-  String lorong;
+  String lorongGang;
   String koordinatX;
   String koordinatY;
-  String namaKk;
+  String namaKkPemilikRumah;
   String pekerjaan;
-  String idKtp;
+  String idKtpkkKepalaRumahTangga;
   String jumlahKk;
-  String jumlahPenghuni;
+  String jumlahPenghuniRumah;
   String fungsiBangunan;
-  String jumlahLantai;
+  String jumlahLantaiBangunan;
   String jenisBangunan;
   String statusKepemilikanRumah;
   String statusKepemilikanTanah;
-  String penghasilan;
+  String penghasilanRupiah;
   String materialAtap;
   String kondisiAtap;
   String materialLantai;
@@ -78,148 +78,148 @@ class Rumah {
   String kondisiMaterial;
   String kondisiRumah;
   String pondasi;
-  String luasBangunan;
+  String luasBangunanMeter;
   String sumberListrik;
   String sumberAir;
-  String jarakSumberkeAir;
+  String jarakSumberAirKePembuanganMeter;
   String sanitasi;
   String persampahan;
   String email;
-  String gambarDepan;
-  String gambarKanan;
-  String gambarKiri;
-  String gambarBelakang;
+  String gambarRumahTampakDepan;
+  String gambarRumahTampakKanan;
+  String gambarRumahTampakKiri;
+  String gambarRumahTampakBelakang;
 
   factory Rumah.fromJson(Map<String, dynamic> json) => Rumah(
     provinsi: json["provinsi"],
-    kabupaten: json["kabupaten"],
+    kabupatenKota: json["kabupaten__kota"],
     kecamatan: json["kecamatan"],
-    kelurahan: json["kelurahan"],
+    kelurahanDesa: json["kelurahan__desa"],
     rw: json["rw"],
     rt: json["rt"],
-    nomorRumah: json["nomorRumah"],
+    nomorRumah: json["nomor_rumah"],
     jalan: json["jalan"],
-    lorong: json["lorong"],
-    koordinatX: json["koordinatX"],
-    koordinatY: json["koordinatY"],
-    namaKk: json["namaKK"],
+    lorongGang: json["lorong__gang"],
+    koordinatX: json["koordinat_x"],
+    koordinatY: json["koordinat__y"],
+    namaKkPemilikRumah: json["nama_kk_pemilik_rumah"],
     pekerjaan: json["pekerjaan"],
-    idKtp: json["idKTP"],
-    jumlahKk: json["jumlahKK"],
-    jumlahPenghuni: json["jumlahPenghuni"],
-    fungsiBangunan: json["fungsiBangunan"],
-    jumlahLantai: json["jumlahLantai"],
-    jenisBangunan: json["jenisBangunan"],
-    statusKepemilikanRumah: json["statusKepemilikanRumah"],
-    statusKepemilikanTanah: json["statusKepemilikanTanah"],
-    penghasilan: json["penghasilan"],
-    materialAtap: json["materialAtap"],
-    kondisiAtap: json["kondisiAtap"],
-    materialLantai: json["materialLantai"],
-    kondisiLantai: json["kondisiLantai"],
-    materialDinding: json["materialDinding"],
-    kondisiMaterial: json["kondisiMaterial"],
-    kondisiRumah: json["kondisiRumah"],
+    idKtpkkKepalaRumahTangga: json["id_ktpkk_kepala_rumah_tangga"],
+    jumlahKk: json["jumlah_kk"],
+    jumlahPenghuniRumah: json["jumlah_penghuni_rumah"],
+    fungsiBangunan: json["fungsi_bangunan"],
+    jumlahLantaiBangunan: json["jumlah_lantai_bangunan"],
+    jenisBangunan: json["jenis_bangunan"],
+    statusKepemilikanRumah: json["status_kepemilikan_rumah"],
+    statusKepemilikanTanah: json["status_kepemilikan_tanah"],
+    penghasilanRupiah: json["penghasilan_rupiah"],
+    materialAtap: json["material_atap"],
+    kondisiAtap: json["kondisi_atap"],
+    materialLantai: json["material_lantai"],
+    kondisiLantai: json["kondisi_lantai"],
+    materialDinding: json["material_dinding"],
+    kondisiMaterial: json["kondisi_material"],
+    kondisiRumah: json["kondisi_rumah"],
     pondasi: json["pondasi"],
-    luasBangunan: json["luasBangunan"],
-    sumberListrik: json["sumberListrik"],
-    sumberAir: json["sumberAir"],
-    jarakSumberkeAir: json["jarakSumberkeAir"],
+    luasBangunanMeter: json["luas_bangunan_meter"],
+    sumberListrik: json["sumber_listrik"],
+    sumberAir: json["sumber_air"],
+    jarakSumberAirKePembuanganMeter: json["jarak_sumber_air_ke_pembuangan_meter"],
     sanitasi: json["sanitasi"],
     persampahan: json["persampahan"],
     email: json["email"],
-    gambarDepan: json["gambarDepan"],
-    gambarKanan: json["gambarKanan"],
-    gambarKiri: json["gambarKiri"],
-    gambarBelakang: json["gambarBelakang"],
+    gambarRumahTampakDepan: json["gambar_rumah_tampak_depan"],
+    gambarRumahTampakKanan: json["gambar_rumah_tampak_kanan"],
+    gambarRumahTampakKiri: json["gambar_rumah_tampak_kiri"],
+    gambarRumahTampakBelakang: json["gambar_rumah_tampak_belakang"],
   );
 
   Map<String, dynamic> toJson() => {
     "provinsi": provinsi,
-    "kabupaten": kabupaten,
+    "kabupaten__kota": kabupatenKota,
     "kecamatan": kecamatan,
-    "kelurahan": kelurahan,
+    "kelurahan__desa": kelurahanDesa,
     "rw": rw,
     "rt": rt,
-    "nomorRumah": nomorRumah,
+    "nomor_rumah": nomorRumah,
     "jalan": jalan,
-    "lorong": lorong,
-    "koordinatX": koordinatX,
-    "koordinatY": koordinatY,
-    "namaKK": namaKk,
+    "lorong__gang": lorongGang,
+    "koordinat_x": koordinatX,
+    "koordinat__y": koordinatY,
+    "nama_kk_pemilik_rumah": namaKkPemilikRumah,
     "pekerjaan": pekerjaan,
-    "idKTP": idKtp,
-    "jumlahKK": jumlahKk,
-    "jumlahPenghuni": jumlahPenghuni,
-    "fungsiBangunan": fungsiBangunan,
-    "jumlahLantai": jumlahLantai,
-    "jenisBangunan": jenisBangunan,
-    "statusKepemilikanRumah": statusKepemilikanRumah,
-    "statusKepemilikanTanah": statusKepemilikanTanah,
-    "penghasilan": penghasilan,
-    "materialAtap": materialAtap,
-    "kondisiAtap": kondisiAtap,
-    "materialLantai": materialLantai,
-    "kondisiLantai": kondisiLantai,
-    "materialDinding": materialDinding,
-    "kondisiMaterial": kondisiMaterial,
-    "kondisiRumah": kondisiRumah,
+    "id_ktpkk_kepala_rumah_tangga": idKtpkkKepalaRumahTangga,
+    "jumlah_kk": jumlahKk,
+    "jumlah_penghuni_rumah": jumlahPenghuniRumah,
+    "fungsi_bangunan": fungsiBangunan,
+    "jumlah_lantai_bangunan": jumlahLantaiBangunan,
+    "jenis_bangunan": jenisBangunan,
+    "status_kepemilikan_rumah": statusKepemilikanRumah,
+    "status_kepemilikan_tanah": statusKepemilikanTanah,
+    "penghasilan_rupiah": penghasilanRupiah,
+    "material_atap": materialAtap,
+    "kondisi_atap": kondisiAtap,
+    "material_lantai": materialLantai,
+    "kondisi_lantai": kondisiLantai,
+    "material_dinding": materialDinding,
+    "kondisi_material": kondisiMaterial,
+    "kondisi_rumah": kondisiRumah,
     "pondasi": pondasi,
-    "luasBangunan": luasBangunan,
-    "sumberListrik": sumberListrik,
-    "sumberAir": sumberAir,
-    "jarakSumberkeAir": jarakSumberkeAir,
+    "luas_bangunan_meter": luasBangunanMeter,
+    "sumber_listrik": sumberListrik,
+    "sumber_air": sumberAir,
+    "jarak_sumber_air_ke_pembuangan_meter": jarakSumberAirKePembuanganMeter,
     "sanitasi": sanitasi,
     "persampahan": persampahan,
     "email": email,
-    "gambarDepan": gambarDepan,
-    "gambarKanan": gambarKanan,
-    "gambarKiri": gambarKiri,
-    "gambarBelakang": gambarBelakang,
+    "gambar_rumah_tampak_depan": gambarRumahTampakDepan,
+    "gambar_rumah_tampak_kanan": gambarRumahTampakKanan,
+    "gambar_rumah_tampak_kiri": gambarRumahTampakKiri,
+    "gambar_rumah_tampak_belakang": gambarRumahTampakBelakang,
   };
 
   static Map<String, dynamic> toMap(Rumah rumah) => {
     "provinsi": rumah.provinsi,
-    "kabupaten": rumah.kabupaten,
+    "kabupaten__kota": rumah.kabupatenKota,
     "kecamatan": rumah.kecamatan,
-    "kelurahan": rumah.kelurahan,
+    "kelurahan__desa": rumah.kelurahanDesa,
     "rw": rumah.rw,
     "rt": rumah.rt,
-    "nomorRumah": rumah.nomorRumah,
+    "nomor_rumah": rumah.nomorRumah,
     "jalan": rumah.jalan,
-    "lorong": rumah.lorong,
-    "koordinatX": rumah.koordinatX,
-    "koordinatY": rumah.koordinatY,
-    "namaKK": rumah.namaKk,
+    "lorong__gang": rumah.lorongGang,
+    "koordinat_x": rumah.koordinatX,
+    "koordinat__y": rumah.koordinatY,
+    "nama_kk_pemilik_rumah": rumah.namaKkPemilikRumah,
     "pekerjaan": rumah.pekerjaan,
-    "idKTP": rumah.idKtp,
-    "jumlahKK": rumah.jumlahKk,
-    "jumlahPenghuni": rumah.jumlahPenghuni,
-    "fungsiBangunan": rumah.fungsiBangunan,
-    "jumlahLantai": rumah.jumlahLantai,
-    "jenisBangunan": rumah.jenisBangunan,
-    "statusKepemilikanRumah": rumah.statusKepemilikanRumah,
-    "statusKepemilikanTanah": rumah.statusKepemilikanTanah,
-    "penghasilan": rumah.penghasilan,
-    "materialAtap": rumah.materialAtap,
-    "kondisiAtap": rumah.kondisiAtap,
-    "materialLantai": rumah.materialLantai,
-    "kondisiLantai": rumah.kondisiLantai,
-    "materialDinding": rumah.materialDinding,
-    "kondisiMaterial": rumah.kondisiMaterial,
-    "kondisiRumah": rumah.kondisiRumah,
+    "id_ktpkk_kepala_rumah_tangga": rumah.idKtpkkKepalaRumahTangga,
+    "jumlah_kk": rumah.jumlahKk,
+    "jumlah_penghuni_rumah": rumah.jumlahPenghuniRumah,
+    "fungsi_bangunan": rumah.fungsiBangunan,
+    "jumlah_lantai_bangunan": rumah.jumlahLantaiBangunan,
+    "jenis_bangunan": rumah.jenisBangunan,
+    "status_kepemilikan_rumah": rumah.statusKepemilikanRumah,
+    "status_kepemilikan_tanah": rumah.statusKepemilikanTanah,
+    "penghasilan_rupiah": rumah.penghasilanRupiah,
+    "material_atap": rumah.materialAtap,
+    "kondisi_atap": rumah.kondisiAtap,
+    "material_lantai": rumah.materialLantai,
+    "kondisi_lantai": rumah.kondisiLantai,
+    "material_dinding": rumah.materialDinding,
+    "kondisi_material": rumah.kondisiMaterial,
+    "kondisi_rumah": rumah.kondisiRumah,
     "pondasi": rumah.pondasi,
-    "luasBangunan": rumah.luasBangunan,
-    "sumberListrik": rumah.sumberListrik,
-    "sumberAir": rumah.sumberAir,
-    "jarakSumberkeAir": rumah.jarakSumberkeAir,
+    "luas_bangunan_meter": rumah.luasBangunanMeter,
+    "sumber_listrik": rumah.sumberListrik,
+    "sumber_air": rumah.sumberAir,
+    "jarak_sumber_air_ke_pembuangan_meter": rumah.jarakSumberAirKePembuanganMeter,
     "sanitasi": rumah.sanitasi,
     "persampahan": rumah.persampahan,
     "email": rumah.email,
-    "gambarDepan": rumah.gambarDepan,
-    "gambarKanan": rumah.gambarKanan,
-    "gambarKiri": rumah.gambarKiri,
-    "gambarBelakang": rumah.gambarBelakang,
+    "gambar_rumah_tampak_depan": rumah.gambarRumahTampakDepan,
+    "gambar_rumah_tampak_kanan": rumah.gambarRumahTampakKanan,
+    "gambar_rumah_tampak_kiri": rumah.gambarRumahTampakKiri,
+    "gambar_rumah_tampak_belakang": rumah.gambarRumahTampakBelakang,
   };
 
   static String encode(List<Rumah> rumahs) => json.encode(

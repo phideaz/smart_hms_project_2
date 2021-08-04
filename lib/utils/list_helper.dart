@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ListHelper{
-
+class ListHelper {
   List<String> provinsi = ["Sumatera Selatan"];
 
   List<String> kabupaten = [
@@ -621,5 +620,38 @@ class ListHelper{
     "Di Buang ke TPS/TPA",
     "Di buang Ke Hutan/Semak"
   ];
+
+  List<String> jenisPermukaan = [
+    "Aspal",
+    "Perkerasan Rigid / Beton",
+    "Telford / Kerikil",
+    "Tanah",
+    "Jenis Lainnya"
+  ];
+
+  List<String> kondisiJalan = [
+    "Baik (M)",
+    "Sedang (M)",
+    "Rusak Ringan (M)",
+    "Rusak Berat (M)"
+  ];
+
+  List<String> memilikiSaluran = ["Ada", "Tidak Ada"];
+
+  List<String> jikaAdaSaluran = [
+    "Saluran Kanan Kiri",
+    "Saluran Kanan Saja",
+    "Saluran Kiri Saja"
+  ];
+
+  List<String> jenisSaluran = ["Terbuka", "Tertutup"];
+
+  List<String> kondisiSaluran = ["Bersih", "Tertutup / Tersumbat", "Erosi"];
+
+  List<String> jenisSaluranDrainase = ["Permanen / Pasangan","Tidak Permanen"];
+  List<String> jenisKonstruksi = ["Cor Beton,","Cor Batu Kali,","Pasangan Bata","Tanah","Lainya"];
+  List<String> kondisiKonstruksi = ["Baik","Rusak Ringan","Rusak Sedang","Rusak Berat"];
+  List<String> jenisSaluranAtas = ["Terbuka","Tertutup"];
+  List<String> kondisiAliranDrainase = ["Mengalir","Tertutup / Tersumbat","Erosi"];
 
 }
