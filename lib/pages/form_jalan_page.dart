@@ -8,6 +8,7 @@ import 'package:flutter_wordpress_api/utils/form_helper.dart';
 import 'package:flutter_wordpress_api/utils/list_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FormJalanPage extends StatefulWidget {
@@ -343,21 +344,14 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKelurahan,
-                          hint: Text(
-                            '--Select--',
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.black.withOpacity(0.2),
+                            width: 1
                           ),
-                          onChanged: (value) =>
-                              setState(() => selectedKelurahan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                          borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .keluarahan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -374,8 +368,55 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKelurahan,
+                          displayClearIcon: false,
+                          hint: "Pilih kelurahan",
+                          searchHint: "Pilih kelurahan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKelurahan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
+                      // Container(
+                      //   margin: EdgeInsets.only(top: 8),
+                      //   child: DropdownButtonFormField(
+                      //     value: selectedKelurahan,
+                      //     hint: Text(
+                      //       '--Select--',
+                      //     ),
+                      //     onChanged: (value) =>
+                      //         setState(() => selectedKelurahan = value),
+                      //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                      //     validator: (value) =>
+                      //         value == null ? 'Diwajibkan memilih' : null,
+                      //     decoration: InputDecoration(
+                      //         border: OutlineInputBorder(
+                      //           borderRadius: BorderRadius.circular(5),
+                      //         ),
+                      //         fillColor: Colors.white),
+                      //     items: ListHelper()
+                      //         .keluarahan
+                      //         .map<DropdownMenuItem<String>>((String value) {
+                      //       return DropdownMenuItem<String>(
+                      //         value: value,
+                      //         child: Container(
+                      //           width: MediaQuery.of(context).size.width *
+                      //               80 /
+                      //               100,
+                      //           child: Text(
+                      //             value,
+                      //             style: TextStyle(fontSize: 14),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     }).toList(),
+                      //   ),
+                      // ),
                     ],
                   ),
                   //RW

@@ -7,6 +7,7 @@ import 'package:flutter_wordpress_api/utils/form_helper.dart';
 import 'package:flutter_wordpress_api/utils/list_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FormRumahPage extends StatefulWidget {
@@ -364,21 +365,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKelurahan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKelurahan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .keluarahan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -395,6 +389,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKelurahan,
+                          displayClearIcon: false,
+                          hint: "Pilih kelurahan",
+                          searchHint: "Pilih kelurahan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKelurahan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
