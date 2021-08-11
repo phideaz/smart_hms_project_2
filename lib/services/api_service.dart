@@ -7,6 +7,7 @@ import 'package:flutter_wordpress_api/services/shared_service.dart';
 class APIServices{
   static var client = http.Client();
   static var apiUrl = 'https://multispasial.xyz';
+  static var layananApiUrl = 'https://layanan.multispasial.xyz/api/';
 
   static Future<bool> loginCustomer(String username, String password) async {
     Map<String, String> requestHeaders = {
@@ -34,5 +35,12 @@ class APIServices{
     }
 
     return false;
+  }
+
+  syncAPI(endpoint) async {
+    var fullUrl = Uri.parse(layananApiUrl + endpoint);
+    return await http.post(
+        fullUrl,
+    );
   }
 }
