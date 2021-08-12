@@ -68,7 +68,6 @@ class _FormJalanPageState extends State<FormJalanPage> {
         case DataConnectionStatus.connected:
           print('Data connection is available.');
           isKonek = true;
-          checkDataLocal();
 
           break;
         case DataConnectionStatus.disconnected:
@@ -141,28 +140,6 @@ class _FormJalanPageState extends State<FormJalanPage> {
     // TODO: implement initState
     super.initState();
     checkConnection();
-  }
-
-  void checkDataLocal() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Fetch and decode data
-    // prefs.remove('rumah_survey');
-
-    final String jalansString = prefs.getString('jalan_survey');
-    if (jalansString != null) {
-      debugPrint("DATA LOCAL : $jalansString", wrapWidth: 1024);
-      final List<Jalan> jalan = Jalan.decode(jalansString);
-      //TODO aktifkan ketika data db udah ada
-      // sendDataToDB(jalan);
-    }
-  }
-
-  void sendDataToDB(List<Jalan> jalans) async {
-    for (int i = 0; i < jalans.length; i++) {
-      //TODO kirim data lewat API
-    }
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('jalan_survey');
   }
 
   @override

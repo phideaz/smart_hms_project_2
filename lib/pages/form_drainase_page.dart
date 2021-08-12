@@ -72,7 +72,7 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
         case DataConnectionStatus.connected:
           print('Data connection is available.');
           isKonek = true;
-          checkDataLocal();
+
 
           break;
         case DataConnectionStatus.disconnected:
@@ -145,28 +145,6 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
     // TODO: implement initState
     super.initState();
     checkConnection();
-  }
-
-  void checkDataLocal() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Fetch and decode data
-    // prefs.remove('rumah_survey');
-
-    final String drainasesString = prefs.getString('drainase_survey');
-    if (drainasesString != null) {
-      debugPrint("DATA LOCAL : $drainasesString", wrapWidth: 1024);
-      final List<Drainase> drainase = Drainase.decode(drainasesString);
-      //TODO aktifkan ketika data db udah ada
-      // sendDataToDB(drainase);
-    }
-  }
-
-  void sendDataToDB(List<Drainase> drainases) async {
-    for (int i = 0; i < drainases.length; i++) {
-      //TODO kirim data lewat API
-    }
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('drainase_survey');
   }
 
   @override
