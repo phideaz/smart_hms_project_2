@@ -1875,20 +1875,87 @@ class _FormRumahPageState extends State<FormRumahPage> {
 
                   GestureDetector(
                     onTap: () async {
-                      if (_formKey.currentState.validate()) {
-                        //form is valid, proceed further
-                        _formKey.currentState
-                            .save(); //save once fields are valid, onSaved method invoked for every form fields
-                        if(_imageTampakDepan != null || _imageTampakKiri != null || _imageTampakKanan != null){
-                          final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                          // Fetch and decode data
-                          final String rumahsString = prefs.getString('rumah_survey');
-                          if(rumahsString != null){
-                            final List<Rumah> rumah = Rumah.decode(rumahsString);
-                            //TODO aktifkan ketika data db udah ada
-                            //sendDataToDB(rumah);
-                            Rumah newData = Rumah(
+                      // ada atau tidak ada internet akan di store ke local
+                      //form is valid, proceed further
+                      _formKey.currentState
+                          .save(); //save once fields are valid, onSaved method invoked for every form fields
+                      if (_imageTampakDepan != null ||
+                          _imageTampakKiri != null ||
+                          _imageTampakKanan != null) {
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        // Fetch and decode data
+                        final String rumahsString =
+                            prefs.getString('rumah_survey');
+                        if (rumahsString != null) {
+                          final List<Rumah> rumah = Rumah.decode(rumahsString);
+                          //TODO aktifkan ketika data db udah ada
+                          //sendDataToDB(rumah);
+                          Rumah newData = Rumah(
+                              provinsi: selectedProvinsi,
+                              kabupatenKota: selectedKabupaten,
+                              kecamatan: selectedKecamatan,
+                              kelurahanDesa: selectedKelurahan,
+                              rw: rwController.text,
+                              rt: rtController.text,
+                              nomorRumah: nomorRumahController.text,
+                              jalan: jalanController.text,
+                              lorongGang: lorongController.text,
+                              koordinatX: koordinatXController.text,
+                              koordinatY: koordinatYController.text,
+                              namaKkPemilikRumah: namaKKController.text,
+                              pekerjaan: selectedPekerjaan,
+                              idKtpkkKepalaRumahTangga: idKTPController.text,
+                              jumlahKk: jumlahKKController.text,
+                              jumlahPenghuniRumah:
+                                  jumlahPenghuniController.text,
+                              fungsiBangunan: selectedFungsiBangunan,
+                              jumlahLantaiBangunan: selectedJumlahLntaiBangunan,
+                              jenisBangunan: selectedJenisBangunan,
+                              statusKepemilikanRumah:
+                                  selectedStatusKepemilikanRumah,
+                              statusKepemilikanTanah:
+                                  selectedStatusKepemilikanTanah,
+                              penghasilanRupiah: penghasilanController.text,
+                              materialAtap: selectedMaterialAtap,
+                              kondisiAtap: selectedKondisiAtap,
+                              materialLantai: selectedMaterialLantai,
+                              kondisiLantai: selectedKondisiLantai,
+                              materialDinding: selectedMaterialDinding,
+                              kondisiMaterial: selectedKondisiMaterial,
+                              kondisiRumah: selectedKondisiRumah,
+                              pondasi: selectedPondasi,
+                              luasBangunanMeter: luasBangunanController.text,
+                              sumberListrik: selectedSubmerListrik,
+                              sumberAir: selectedSubmerAir,
+                              jarakSumberAirKePembuanganMeter:
+                                  jarakSumberAirController.text,
+                              sanitasi: selectedSanitasi,
+                              persampahan: selectedPersampahan,
+                              email: emailController.text,
+                              gambarRumahTampakDepan:
+                                  _imageTampakDepan.path.toString(),
+                              gambarRumahTampakKanan:
+                                  _imageTampakKanan.path.toString(),
+                              gambarRumahTampakKiri:
+                                  _imageTampakKiri.path.toString(),
+                              gambarRumahTampakBelakang:
+                                  _imageTampakBelakang.path.toString());
+                          rumah.add(newData);
+                          String oldData = Rumah.encode(rumah);
+
+                          await prefs.setString('rumah_survey', oldData);
+                          print("SIMPAN DATA LOCAL BERHASIL");
+                          FormHelper.showMessage(context, "Survey",
+                              "Berhasil Menyimpan Data", "Ok", () {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pop();
+                          });
+                        }
+                        // Encode and store data in SharedPreferences
+                        else {
+                          final String encodedData = Rumah.encode([
+                            Rumah(
                                 provinsi: selectedProvinsi,
                                 kabupatenKota: selectedKabupaten,
                                 kecamatan: selectedKecamatan,
@@ -1904,14 +1971,16 @@ class _FormRumahPageState extends State<FormRumahPage> {
                                 pekerjaan: selectedPekerjaan,
                                 idKtpkkKepalaRumahTangga: idKTPController.text,
                                 jumlahKk: jumlahKKController.text,
-                                jumlahPenghuniRumah: jumlahPenghuniController.text,
+                                jumlahPenghuniRumah:
+                                    jumlahPenghuniController.text,
                                 fungsiBangunan: selectedFungsiBangunan,
-                                jumlahLantaiBangunan: selectedJumlahLntaiBangunan,
+                                jumlahLantaiBangunan:
+                                    selectedJumlahLntaiBangunan,
                                 jenisBangunan: selectedJenisBangunan,
                                 statusKepemilikanRumah:
-                                selectedStatusKepemilikanRumah,
+                                    selectedStatusKepemilikanRumah,
                                 statusKepemilikanTanah:
-                                selectedStatusKepemilikanTanah,
+                                    selectedStatusKepemilikanTanah,
                                 penghasilanRupiah: penghasilanController.text,
                                 materialAtap: selectedMaterialAtap,
                                 kondisiAtap: selectedKondisiAtap,
@@ -1924,91 +1993,44 @@ class _FormRumahPageState extends State<FormRumahPage> {
                                 luasBangunanMeter: luasBangunanController.text,
                                 sumberListrik: selectedSubmerListrik,
                                 sumberAir: selectedSubmerAir,
-                                jarakSumberAirKePembuanganMeter: jarakSumberAirController.text,
+                                jarakSumberAirKePembuanganMeter:
+                                    jarakSumberAirController.text,
                                 sanitasi: selectedSanitasi,
                                 persampahan: selectedPersampahan,
                                 email: emailController.text,
-                                gambarRumahTampakDepan: _imageTampakDepan.path.toString(),
-                                gambarRumahTampakKanan: _imageTampakKanan.path.toString(),
-                                gambarRumahTampakKiri: _imageTampakKiri.path.toString(),
-                                gambarRumahTampakBelakang: _imageTampakBelakang.path.toString());
-                            rumah.add(newData);
-                            String oldData = Rumah.encode(rumah);
+                                gambarRumahTampakDepan:
+                                    _imageTampakDepan.path.toString(),
+                                gambarRumahTampakKanan:
+                                    _imageTampakKanan.path.toString(),
+                                gambarRumahTampakKiri:
+                                    _imageTampakKiri.path.toString(),
+                                gambarRumahTampakBelakang:
+                                    _imageTampakBelakang.path.toString())
+                          ]);
 
-                            await prefs.setString('rumah_survey', oldData);
-                            print("SIMPAN DATA LOCAL BERHASIL");
-                            FormHelper.showMessage(context, "Survey", "Berhasil Menyimpan Data", "Ok", (){
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                            });
-                          }
-                          // Encode and store data in SharedPreferences
-                          else{
-                            final String encodedData = Rumah.encode([
-                              Rumah(
-                                  provinsi: selectedProvinsi,
-                                  kabupatenKota: selectedKabupaten,
-                                  kecamatan: selectedKecamatan,
-                                  kelurahanDesa: selectedKelurahan,
-                                  rw: rwController.text,
-                                  rt: rtController.text,
-                                  nomorRumah: nomorRumahController.text,
-                                  jalan: jalanController.text,
-                                  lorongGang: lorongController.text,
-                                  koordinatX: koordinatXController.text,
-                                  koordinatY: koordinatYController.text,
-                                  namaKkPemilikRumah: namaKKController.text,
-                                  pekerjaan: selectedPekerjaan,
-                                  idKtpkkKepalaRumahTangga: idKTPController.text,
-                                  jumlahKk: jumlahKKController.text,
-                                  jumlahPenghuniRumah: jumlahPenghuniController.text,
-                                  fungsiBangunan: selectedFungsiBangunan,
-                                  jumlahLantaiBangunan: selectedJumlahLntaiBangunan,
-                                  jenisBangunan: selectedJenisBangunan,
-                                  statusKepemilikanRumah:
-                                  selectedStatusKepemilikanRumah,
-                                  statusKepemilikanTanah:
-                                  selectedStatusKepemilikanTanah,
-                                  penghasilanRupiah: penghasilanController.text,
-                                  materialAtap: selectedMaterialAtap,
-                                  kondisiAtap: selectedKondisiAtap,
-                                  materialLantai: selectedMaterialLantai,
-                                  kondisiLantai: selectedKondisiLantai,
-                                  materialDinding: selectedMaterialDinding,
-                                  kondisiMaterial: selectedKondisiMaterial,
-                                  kondisiRumah: selectedKondisiRumah,
-                                  pondasi: selectedPondasi,
-                                  luasBangunanMeter: luasBangunanController.text,
-                                  sumberListrik: selectedSubmerListrik,
-                                  sumberAir: selectedSubmerAir,
-                                  jarakSumberAirKePembuanganMeter: jarakSumberAirController.text,
-                                  sanitasi: selectedSanitasi,
-                                  persampahan: selectedPersampahan,
-                                  email: emailController.text,
-                                  gambarRumahTampakDepan: _imageTampakDepan.path.toString(),
-                                  gambarRumahTampakKanan: _imageTampakKanan.path.toString(),
-                                  gambarRumahTampakKiri: _imageTampakKiri.path.toString(),
-                                  gambarRumahTampakBelakang: _imageTampakBelakang.path.toString())
-                            ]);
-
-                            await prefs.setString('rumah_survey', encodedData);
-                            print("SIMPAN DATA LOCAL BERHASIL");
-                            FormHelper.showMessage(context, "Survey", "Berhasil Menyimpan Data", "Ok", (){
-                              Navigator.of(context).pop();
-                              Navigator.of(context).pop();
-                            });
-                          }
-
-                        }else{
-                          FormHelper.showMessage(context, "Peringatan", "Gambar wajib dimasukkan", "Ok", (){
+                          await prefs.setString('rumah_survey', encodedData);
+                          print("SIMPAN DATA LOCAL BERHASIL");
+                          FormHelper.showMessage(context, "Survey",
+                              "Berhasil Menyimpan Data", "Ok", () {
+                            Navigator.of(context).pop();
                             Navigator.of(context).pop();
                           });
                         }
+                      } else {
+                        FormHelper.showMessage(context, "Peringatan",
+                            "Gambar wajib dimasukkan", "Ok", () {
+                          Navigator.of(context).pop();
+                        });
                       }
-                      //KALAU TERDAPAT INTERNET
-                      else {
 
-                      }
+
+                      // if (_formKey.currentState.validate()) {
+                        
+                      // }
+                      // //KALAU TERDAPAT INTERNET
+                      // else {
+
+                      // }
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
