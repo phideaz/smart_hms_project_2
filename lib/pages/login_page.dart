@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_wordpress_api/services/progress_hud.dart';
 import 'package:flutter_wordpress_api/services/api_service.dart';
 import 'package:flutter_wordpress_api/utils/form_helper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -31,6 +32,11 @@ bool isApiCallProcess = false;
       )
     );
   }
+void saveUserId(String idUser) async{
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('user_id', idUser);
+}
+
 
   Widget _loginUISetup(BuildContext context){
     return new SingleChildScrollView(
@@ -157,6 +163,7 @@ bool isApiCallProcess = false;
                   if(response){
                     globalFormKey.currentState.reset();
                     Navigator.of(context).pushReplacementNamed('/home');
+                    // saveUserId(response);
                   }
                   else{
                     FormHelper.showMessage(context, "Login", "Invalid Username/Password", "Ok", (){
