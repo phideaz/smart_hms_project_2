@@ -285,7 +285,7 @@ class _HomePageState extends State<HomePage> {
     for(int i = 0; i<rumahs.length; i++){
       print("failed : $failed");
       if(failed == 0){
-        Uri apiUrl = Uri.parse("${APIServices.apiUrl}/rumah/sync");
+        Uri apiUrl = Uri.parse("${APIServices.layananApiUrl}rumah/sync");
         final imageUploadRequest = http.MultipartRequest('POST', apiUrl);
 
         //FILE TAMPAK DEPAN
@@ -366,6 +366,7 @@ class _HomePageState extends State<HomePage> {
         imageUploadRequest.fields['email'] = rumahs[i].email;
 
         print("DATA LAPORAN : ${imageUploadRequest.fields.toString()}");
+        print("URL API: ${apiUrl.toString()}");
 
         try {
           final streamedResponse = await imageUploadRequest.send();
