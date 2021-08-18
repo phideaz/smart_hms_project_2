@@ -1875,7 +1875,10 @@ class _FormRumahPageState extends State<FormRumahPage> {
 
                   GestureDetector(
                     onTap: () async {
-                      if (_formKey.currentState.validate()) {
+                      // if (_formKey.currentState.validate()) {
+
+
+                        
                         //form is valid, proceed further
                         _formKey.currentState
                             .save(); //save once fields are valid, onSaved method invoked for every form fields
@@ -2004,11 +2007,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                             Navigator.of(context).pop();
                           });
                         }
-                      }
-                      //KALAU TERDAPAT INTERNET
-                      else {
 
-                      }
+
+
+                      // }
+                      // //KALAU TERDAPAT INTERNET
+                      // else {
+
+                      // }
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,

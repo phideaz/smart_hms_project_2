@@ -371,6 +371,7 @@ class _HomePageState extends State<HomePage> {
         try {
           final streamedResponse = await imageUploadRequest.send();
           final response = await http.Response.fromStream(streamedResponse);
+
           if (response.statusCode != 200) {
             print(response.statusCode);
             print(response.body);
@@ -384,7 +385,7 @@ class _HomePageState extends State<HomePage> {
           }else{
             failed = 1;
           }
-//         return responseData;
+        //return responseData;
         } catch (e) {
           print(e);
           return null;
