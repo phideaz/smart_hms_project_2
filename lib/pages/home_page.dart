@@ -365,8 +365,6 @@ class _HomePageState extends State<HomePage> {
         imageUploadRequest.fields['persampahan'] = rumahs[i].persampahan == null ? '' : rumahs[i].persampahan;
         imageUploadRequest.fields['email'] = rumahs[i].email == null ? '' : rumahs[i].email;
 
-        print("DATA LAPORAN : ${imageUploadRequest.fields.toString()}");
-        print("URL API: ${apiUrl.toString()}");
 
         try {
           final streamedResponse = await imageUploadRequest.send();
