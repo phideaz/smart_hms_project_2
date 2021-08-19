@@ -94,50 +94,91 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
     //
 
     // print("FILE : ${pickedFile.path}");
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFoto1 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFoto1 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
   }
 
   Future getImage2() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFoto2 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFoto2 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
   }
 
   Future getImage3() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFoto3 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFoto3 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
+
   }
 
   Future getImage4() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFoto4 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFoto4 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
+
   }
 
   @override
@@ -1166,20 +1207,60 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                         //form is valid, proceed further
                         _formKeyDrainase.currentState
                             .save(); //save once fields are valid, onSaved method invoked for every form fields
-                        if (isKonek == false) {
-                          if (_imageFoto1 != null ||
-                              _imageFoto2 != null) {
-                            final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                            // Fetch and decode data
-                            final String drainasesString =
-                            prefs.getString('drainase_survey');
-                            if (drainasesString != null) {
-                              final List<Drainase> drainase =
-                              Drainase.decode(drainasesString);
-                              //TODO aktifkan ketika data db udah ada
-                              //sendDataToDB(rumah);
-                              Drainase newData = Drainase(
+                        if (_imageFoto1 != null ||
+                            _imageFoto2 != null) {
+                          final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                          // Fetch and decode data
+                          final String drainasesString =
+                          prefs.getString('drainase_survey');
+                          if (drainasesString != null) {
+                            final List<Drainase> drainase =
+                            Drainase.decode(drainasesString);
+                            //TODO aktifkan ketika data db udah ada
+                            //sendDataToDB(rumah);
+                            Drainase newData = Drainase(
+                                provinsi: selectedProvinsi,
+                                kabupatenKota: selectedKabupaten,
+                                kecamatan: selectedKecamatan,
+                                kelurahanDesa: selectedKelurahan,
+                                rw: rwController.text,
+                                rt: rtController.text,
+                                ident: identController.text,
+                                namaJalanLokasiSaluran: namaJalanController.text,
+                                jenisSaluran: selectedJenisSaluran,
+                                jenisKonstruksi: selectedJenisKonstruksi,
+                                kondisiKonstruksi: selectedKondisiKonstruksi,
+                                jenisSaluranAtas: selectedJenisSaluranAtas,
+                                kondisiAliranDrainase: selectedKondisiAliranDrainase,
+                                panjang: panjangController.text,
+                                tinggi: tinggiController.text,
+                                lebarBawah: lebarBawahController.text,
+                                lebarAtas: lebarAtasController.text,
+                                tebalBibirDrainase: tebalBibirDrainaseController.text,
+                                arahAliran: arahAliranController.text,
+                                tahunPembuatan: tahunPembuatanController.text,
+                                yangMembangun: yangMembangunController.text,
+                                keterangan: keteranganController.text,
+                                fotoDrainase1: _imageFoto1.path.toString(),
+                                fotoDrainase2: _imageFoto2.path.toString(),
+                                fotoDrainase3: _imageFoto3.path.toString(),
+                                fotoDrainase4: _imageFoto4.path.toString());
+                            drainase.add(newData);
+                            String oldData = Drainase.encode(drainase);
+
+                            await prefs.setString('drainase_survey', oldData);
+                            print("SIMPAN DATA LOCAL BERHASIL");
+                            FormHelper.showMessage(context, "Survey",
+                                "Berhasil Menyimpan Data", "Ok", () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                });
+                          }
+                          // Encode and store data in SharedPreferences
+                          else {
+                            final String encodedData = Drainase.encode([
+                              Drainase(
                                   provinsi: selectedProvinsi,
                                   kabupatenKota: selectedKabupaten,
                                   kecamatan: selectedKecamatan,
@@ -1202,72 +1283,28 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                                   tahunPembuatan: tahunPembuatanController.text,
                                   yangMembangun: yangMembangunController.text,
                                   keterangan: keteranganController.text,
-                                  fotoDrainase1: _imageFoto1.toString(),
-                                  fotoDrainase2: _imageFoto2.toString(),
-                                  fotoDrainase3: _imageFoto3.toString(),
-                                  fotoDrainase4: _imageFoto4.toString());
-                              drainase.add(newData);
-                              String oldData = Drainase.encode(drainase);
+                                  fotoDrainase1: _imageFoto1.path.toString(),
+                                  fotoDrainase2: _imageFoto2.path.toString(),
+                                  fotoDrainase3: _imageFoto3.path.toString(),
+                                  fotoDrainase4: _imageFoto4.path.toString())
+                            ]);
 
-                              await prefs.setString('drainase_survey', oldData);
-                              print("SIMPAN DATA LOCAL BERHASIL");
-                              FormHelper.showMessage(context, "Survey",
-                                  "Berhasil Menyimpan Data", "Ok", () {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  });
-                            }
-                            // Encode and store data in SharedPreferences
-                            else {
-                              final String encodedData = Drainase.encode([
-                                Drainase(
-                                    provinsi: selectedProvinsi,
-                                    kabupatenKota: selectedKabupaten,
-                                    kecamatan: selectedKecamatan,
-                                    kelurahanDesa: selectedKelurahan,
-                                    rw: rwController.text,
-                                    rt: rtController.text,
-                                    ident: identController.text,
-                                    namaJalanLokasiSaluran: namaJalanController.text,
-                                    jenisSaluran: selectedJenisSaluran,
-                                    jenisKonstruksi: selectedJenisKonstruksi,
-                                    kondisiKonstruksi: selectedKondisiKonstruksi,
-                                    jenisSaluranAtas: selectedJenisSaluranAtas,
-                                    kondisiAliranDrainase: selectedKondisiAliranDrainase,
-                                    panjang: panjangController.text,
-                                    tinggi: tinggiController.text,
-                                    lebarBawah: lebarBawahController.text,
-                                    lebarAtas: lebarAtasController.text,
-                                    tebalBibirDrainase: tebalBibirDrainaseController.text,
-                                    arahAliran: arahAliranController.text,
-                                    tahunPembuatan: tahunPembuatanController.text,
-                                    yangMembangun: yangMembangunController.text,
-                                    keterangan: keteranganController.text,
-                                    fotoDrainase1: _imageFoto1.toString(),
-                                    fotoDrainase2: _imageFoto2.toString(),
-                                    fotoDrainase3: _imageFoto3.toString(),
-                                    fotoDrainase4: _imageFoto4.toString())
-                              ]);
-
-                              await prefs.setString(
-                                  'drainase_survey', encodedData);
-                              print("SIMPAN DATA LOCAL BERHASIL");
-                              FormHelper.showMessage(context, "Survey",
-                                  "Berhasil Menyimpan Data", "Ok", () {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  });
-                            }
-                          } else {
-                            FormHelper.showMessage(context, "Peringatan",
-                                "Gambar wajib dimasukkan", "Ok", () {
+                            await prefs.setString(
+                                'drainase_survey', encodedData);
+                            print("SIMPAN DATA LOCAL BERHASIL");
+                            FormHelper.showMessage(context, "Survey",
+                                "Berhasil Menyimpan Data", "Ok", () {
+                                  Navigator.of(context).pop();
                                   Navigator.of(context).pop();
                                 });
                           }
+                        } else {
+                          FormHelper.showMessage(context, "Peringatan",
+                              "Gambar wajib dimasukkan", "Ok", () {
+                                Navigator.of(context).pop();
+                              });
                         }
                       }
-                      //KALAU TERDAPAT INTERNET
-                      else {}
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,

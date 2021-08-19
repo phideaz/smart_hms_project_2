@@ -109,51 +109,88 @@ class _FormRumahPageState extends State<FormRumahPage> {
     //
 
     // print("FILE : ${pickedFile.path}");
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageTampakDepan = File(pickedFile.path);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageTampakDepan = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
 
-      } else {
-        print('No image selected.');
-      }
-    });
   }
 
   Future getImageKanan() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageTampakKanan = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageTampakKanan = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
   }
 
   Future getImageKiri() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageTampakKiri = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageTampakKiri = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
   }
 
   Future getImageBelakang() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageTampakBelakang = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageTampakBelakang = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
   }
 
   @override
@@ -1875,14 +1912,11 @@ class _FormRumahPageState extends State<FormRumahPage> {
 
                   GestureDetector(
                     onTap: () async {
-                      // if (_formKey.currentState.validate()) {
-
-
-                        
+                      if (_formKey.currentState.validate()) {
                         //form is valid, proceed further
                         _formKey.currentState
                             .save(); //save once fields are valid, onSaved method invoked for every form fields
-                        if(_imageTampakDepan != null || _imageTampakKiri != null || _imageTampakKanan != null){
+                        if(_imageTampakDepan != null || _imageTampakKiri != null || _imageTampakKanan != null || _imageTampakBelakang != null){
                           final SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                           // Fetch and decode data
@@ -2008,13 +2042,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                           });
                         }
 
-
-
-                      // }
-                      // //KALAU TERDAPAT INTERNET
-                      // else {
-
-                      // }
+                      }
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,

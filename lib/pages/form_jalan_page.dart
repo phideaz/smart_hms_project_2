@@ -89,50 +89,90 @@ class _FormJalanPageState extends State<FormJalanPage> {
     //
 
     // print("FILE : ${pickedFile.path}");
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFotoJalan1 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFotoJalan1 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
   }
 
   Future getImageJalan2() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFotoJalan2 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFotoJalan2 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
   }
 
   Future getImageJalan3() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFotoJalan3 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFotoJalan3 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
+
   }
 
   Future getImageJalan4() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFotoJalan4 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFotoJalan4 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
   }
 
   @override
@@ -1159,20 +1199,58 @@ class _FormJalanPageState extends State<FormJalanPage> {
                         //form is valid, proceed further
                         _formKeyJalan.currentState
                             .save(); //save once fields are valid, onSaved method invoked for every form fields
-                        if (isKonek == false) {
-                          if (_imageFotoJalan1 != null ||
-                              _imageFotoJalan2 != null) {
-                            final SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            // Fetch and decode data
-                            final String jalansString =
-                                prefs.getString('jalan_survey');
-                            if (jalansString != null) {
-                              final List<Jalan> jalan =
-                                  Jalan.decode(jalansString);
-                              //TODO aktifkan ketika data db udah ada
-                              //sendDataToDB(rumah);
-                              Jalan newData = Jalan(
+                        if (_imageFotoJalan1 != null ||
+                            _imageFotoJalan2 != null) {
+                          final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                          // Fetch and decode data
+                          final String jalansString =
+                          prefs.getString('jalan_survey');
+                          if (jalansString != null) {
+                            final List<Jalan> jalan =
+                            Jalan.decode(jalansString);
+                            //TODO aktifkan ketika data db udah ada
+                            //sendDataToDB(rumah);
+                            Jalan newData = Jalan(
+                                provinsi: selectedProvinsi,
+                                kabupatenKota: selectedKabupaten,
+                                kecamatan: selectedKecamatan,
+                                kelurahanDesa: selectedKelurahan,
+                                rw: rwController.text,
+                                rt: rtController.text,
+                                ident: identController.text,
+                                namaJalan: namaJalanController.text,
+                                jenisPermukaan: selectedJenisPermukaan,
+                                kondisi: selectedKondisiJalan,
+                                memilikiSaluran: selectedMemilikiSaluran,
+                                jikaAdaSaluran: selectedJikaAdaSaluran,
+                                jenisSaluran: selectedJenisSaluran,
+                                kondisiSaluran: selectedKondisiSaluran,
+                                panjangRuas: panjangRuasController.text,
+                                lebarRuas: lebarLuasController.text,
+                                tebalJalan: tebalJalanController.text,
+                                tahunPembuatan: tahunPembuatanController.text,
+                                yangMembangun: yangMembangunController.text,
+                                keterangan: keteranganController.text,
+                                fotoJalan1: _imageFotoJalan1.path.toString(),
+                                fotoJalan2: _imageFotoJalan2.path.toString(),
+                                fotoJalan3: _imageFotoJalan3.path.toString(),
+                                fotoJalan4: _imageFotoJalan4.path.toString());
+                            jalan.add(newData);
+                            String oldData = Jalan.encode(jalan);
+
+                            await prefs.setString('jalan_survey', oldData);
+                            print("SIMPAN DATA LOCAL BERHASIL");
+                            FormHelper.showMessage(context, "Survey",
+                                "Berhasil Menyimpan Data", "Ok", () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                });
+                          }
+                          // Encode and store data in SharedPreferences
+                          else {
+                            final String encodedData = Jalan.encode([
+                              Jalan(
                                   provinsi: selectedProvinsi,
                                   kabupatenKota: selectedKabupaten,
                                   kecamatan: selectedKecamatan,
@@ -1190,74 +1268,32 @@ class _FormJalanPageState extends State<FormJalanPage> {
                                   panjangRuas: panjangRuasController.text,
                                   lebarRuas: lebarLuasController.text,
                                   tebalJalan: tebalJalanController.text,
-                                  tahunPembuatan: tahunPembuatanController.text,
+                                  tahunPembuatan:
+                                  tahunPembuatanController.text,
                                   yangMembangun: yangMembangunController.text,
                                   keterangan: keteranganController.text,
-                                  fotoJalan1: _imageFotoJalan1.toString(),
-                                  fotoJalan2: _imageFotoJalan2.toString(),
-                                  fotoJalan3: _imageFotoJalan3.toString(),
-                                  fotoJalan4: _imageFotoJalan4.toString());
-                              jalan.add(newData);
-                              String oldData = Jalan.encode(jalan);
+                                  fotoJalan1: _imageFotoJalan1.path.toString(),
+                                  fotoJalan2: _imageFotoJalan2.path.toString(),
+                                  fotoJalan3: _imageFotoJalan3.path.toString(),
+                                  fotoJalan4: _imageFotoJalan4.path.toString())
+                            ]);
 
-                              await prefs.setString('jalan_survey', oldData);
-                              print("SIMPAN DATA LOCAL BERHASIL");
-                              FormHelper.showMessage(context, "Survey",
-                                  "Berhasil Menyimpan Data", "Ok", () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                              });
-                            }
-                            // Encode and store data in SharedPreferences
-                            else {
-                              final String encodedData = Jalan.encode([
-                                Jalan(
-                                    provinsi: selectedProvinsi,
-                                    kabupatenKota: selectedKabupaten,
-                                    kecamatan: selectedKecamatan,
-                                    kelurahanDesa: selectedKelurahan,
-                                    rw: rwController.text,
-                                    rt: rtController.text,
-                                    ident: identController.text,
-                                    namaJalan: namaJalanController.text,
-                                    jenisPermukaan: selectedJenisPermukaan,
-                                    kondisi: selectedKondisiJalan,
-                                    memilikiSaluran: selectedMemilikiSaluran,
-                                    jikaAdaSaluran: selectedJikaAdaSaluran,
-                                    jenisSaluran: selectedJenisSaluran,
-                                    kondisiSaluran: selectedKondisiSaluran,
-                                    panjangRuas: panjangRuasController.text,
-                                    lebarRuas: lebarLuasController.text,
-                                    tebalJalan: tebalJalanController.text,
-                                    tahunPembuatan:
-                                        tahunPembuatanController.text,
-                                    yangMembangun: yangMembangunController.text,
-                                    keterangan: keteranganController.text,
-                                    fotoJalan1: _imageFotoJalan1.toString(),
-                                    fotoJalan2: _imageFotoJalan2.toString(),
-                                    fotoJalan3: _imageFotoJalan3.toString(),
-                                    fotoJalan4: _imageFotoJalan4.toString())
-                              ]);
-
-                              await prefs.setString(
-                                  'jalan_survey', encodedData);
-                              print("SIMPAN DATA LOCAL BERHASIL");
-                              FormHelper.showMessage(context, "Survey",
-                                  "Berhasil Menyimpan Data", "Ok", () {
-                                Navigator.of(context).pop();
-                                Navigator.of(context).pop();
-                              });
-                            }
-                          } else {
-                            FormHelper.showMessage(context, "Peringatan",
-                                "Gambar wajib dimasukkan", "Ok", () {
-                              Navigator.of(context).pop();
-                            });
+                            await prefs.setString(
+                                'jalan_survey', encodedData);
+                            print("SIMPAN DATA LOCAL BERHASIL");
+                            FormHelper.showMessage(context, "Survey",
+                                "Berhasil Menyimpan Data", "Ok", () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                });
                           }
+                        } else {
+                          FormHelper.showMessage(context, "Peringatan",
+                              "Gambar wajib dimasukkan", "Ok", () {
+                                Navigator.of(context).pop();
+                              });
                         }
                       }
-                      //KALAU TERDAPAT INTERNET
-                      else {}
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,
