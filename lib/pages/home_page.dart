@@ -4,6 +4,7 @@ import 'package:flutter_wordpress_api/model/login_model.dart';
 import 'package:flutter_wordpress_api/model/survey_drainase_model.dart';
 import 'package:flutter_wordpress_api/model/survey_jalan_model.dart';
 import 'package:flutter_wordpress_api/model/survey_rumah_model.dart';
+import 'package:flutter_wordpress_api/model/survey_sanitasi_model.dart';
 import 'package:flutter_wordpress_api/pages/form_sanitasi_page.dart';
 import 'package:flutter_wordpress_api/pages/form_drainase_page.dart';
 import 'package:flutter_wordpress_api/pages/form_jalan_page.dart';
@@ -318,6 +319,19 @@ class _HomePageState extends State<HomePage> {
     // prefs.remove('drainase_survey');
     // prefs.remove('jalan_survey');
 
+    final String sanitasisString = prefs.getString('sanitasi_survey');
+    if (sanitasisString != null) {
+      Navigator.pop(context);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return DialogLoading("Sync Data Sanitasi");
+          });
+      debugPrint("DATA LOCAL : $sanitasisString", wrapWidth: 1024);
+      final List<Sanitasi> sanitasi = Sanitasi.decode(sanitasisString);
+      //TODO aktifkan ketika data db udah ada
+      sendDataToDBSanitasi(sanitasi);
+    }
     final String drainasesString = prefs.getString('drainase_survey');
     if (drainasesString != null) {
       Navigator.pop(context);
@@ -644,6 +658,119 @@ class _HomePageState extends State<HomePage> {
       prefs.remove('drainase_survey');
       String remainingData = Drainase.encode(tempDrainase);
       await prefs.setString('drainase_survey', remainingData);
+      print("SIMPAN REMAINING DATA LOCAL BERHASIL");
+    }
+  }
+
+  void sendDataToDBSanitasi(List<Sanitasi> sanitasis) async {
+
+    List<Sanitasi> tempSanitasi = sanitasis;
+    int jumlahDone = 0;
+
+    Map<String, String> headers = {
+      'Accept' : 'application/json',
+//      'Authorization' : 'Bearer $token'
+    };
+    int failed = 0;
+
+    for(int i = 0; i<sanitasis.length; i++){
+      print("failed : $failed");
+      if(failed == 0){
+        Uri apiUrl = Uri.parse("${APIServices.layananApiUrl}sanitasi/sync");
+        final imageUploadRequest = http.MultipartRequest('POST', apiUrl);
+
+        //FILE 1
+        final mimeTypeData1 =
+        lookupMimeType(sanitasis[i].fotoSanitasi1, headerBytes: [0xFF, 0xD8]).split('/');
+
+        final fileGambar1 = await http.MultipartFile.fromPath(
+            'foto_sanitasi_1', sanitasis[i].fotoSanitasi1,
+            contentType: MediaType(mimeTypeData1[0], mimeTypeData1[1]));
+
+        //FILE 2
+        final mimeTypeData2 =
+        lookupMimeType(sanitasis[i].fotoSanitasi2, headerBytes: [0xFF, 0xD8]).split('/');
+
+        final fileGambar2 = await http.MultipartFile.fromPath(
+            'foto_sanitasi_2', sanitasis[i].fotoSanitasi2,
+            contentType: MediaType(mimeTypeData2[0], mimeTypeData2[1]));
+
+        //FILE 3
+        final mimeTypeData3 =
+        lookupMimeType(sanitasis[i].fotoSanitasi3, headerBytes: [0xFF, 0xD8]).split('/');
+
+        final fileGambar3 = await http.MultipartFile.fromPath(
+            'foto_sanitasi_3', sanitasis[i].fotoSanitasi3,
+            contentType: MediaType(mimeTypeData3[0], mimeTypeData3[1]));
+
+        //FILE 4
+        final mimeTypeData4 =
+        lookupMimeType(sanitasis[i].fotoSaranaPersampahan1, headerBytes: [0xFF, 0xD8]).split('/');
+
+        final fileGambar4 = await http.MultipartFile.fromPath(
+            'foto_sarana_persampahan_1', sanitasis[i].fotoSaranaPersampahan1,
+            contentType: MediaType(mimeTypeData4[0], mimeTypeData4[1]));
+
+        imageUploadRequest.headers.addAll(headers);
+        imageUploadRequest.files.add(fileGambar1);
+        imageUploadRequest.files.add(fileGambar2);
+        imageUploadRequest.files.add(fileGambar3);
+        imageUploadRequest.files.add(fileGambar4);
+        //GET USER ID
+        imageUploadRequest.fields['user_id'] = userId == null ? '' : userId;
+        imageUploadRequest.fields['provinsi'] = sanitasis[i].provinsi == null ? '' : sanitasis[i].provinsi;
+        imageUploadRequest.fields['kabupaten__kota'] = sanitasis[i].kabupatenKota == null ? '' : sanitasis[i].kabupatenKota;
+        imageUploadRequest.fields['kecamatan'] = sanitasis[i].kecamatan == null ? '' : sanitasis[i].kecamatan;
+        imageUploadRequest.fields['kelurahan__desa'] = sanitasis[i].kelurahanDesa == null ? '' : sanitasis[i].kelurahanDesa;
+        imageUploadRequest.fields['rw'] = sanitasis[i].rw == null ? '' : sanitasis[i].rw;
+        imageUploadRequest.fields['rt'] = sanitasis[i].rt == null ? '' : sanitasis[i].rt;
+        imageUploadRequest.fields['jumlah_kamar_mandi__wc'] = sanitasis[i].jumlahKamarMandiWc == null ? '' : sanitasis[i].jumlahKamarMandiWc;
+        imageUploadRequest.fields['nama_kk__pemilik_rumah'] = sanitasis[i].namaKkPemilikRumah == null ? '' : sanitasis[i].namaKkPemilikRumah;
+        imageUploadRequest.fields['fasilitas_sanitasi'] = sanitasis[i].fasilitasSanitasi == null ? '' : sanitasis[i].fasilitasSanitasi;
+        imageUploadRequest.fields['bangunan_atas'] = sanitasis[i].bangunanAtas == null ? '' : sanitasis[i].bangunanAtas;
+        imageUploadRequest.fields['bangunan_bawah'] = sanitasis[i].bangunanBawah == null ? '' : sanitasis[i].bangunanBawah;
+        imageUploadRequest.fields['pembuangan_air_limbah_rt'] = sanitasis[i].pembuanganAirLimbahRt == null ? '' : sanitasis[i].pembuanganAirLimbahRt;
+        imageUploadRequest.fields['pembuangan_sampah_rt'] = sanitasis[i].pembuanganSampahRt == null ? '' : sanitasis[i].pembuanganSampahRt;
+
+
+        try {
+          final streamedResponse = await imageUploadRequest.send();
+          final response = await http.Response.fromStream(streamedResponse);
+
+          if (response.statusCode != 200) {
+            print(response.statusCode);
+            print(response.body);
+            return null;
+          }
+          final Map<String, dynamic> responseData = json.decode(response.body);
+          print("response data : $responseData");
+          if(responseData['success']){
+            tempSanitasi.removeAt(i);
+            jumlahDone = jumlahDone + 1;
+          }else{
+            failed = 1;
+          }
+          //return responseData;
+        } catch (e) {
+          print(e);
+          return null;
+        }
+      }else{
+
+      }
+
+
+    }
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(jumlahDone == sanitasis.length){
+      Navigator.pop(context);
+      prefs.remove('sanitasi_survey');
+
+    }else if(jumlahDone != sanitasis.length){
+      Navigator.pop(context);
+      prefs.remove('sanitasi_survey');
+      String remainingData = Sanitasi.encode(tempSanitasi);
+      await prefs.setString('sanitasi_survey', remainingData);
       print("SIMPAN REMAINING DATA LOCAL BERHASIL");
     }
   }
