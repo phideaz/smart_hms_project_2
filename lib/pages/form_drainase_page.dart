@@ -3,12 +3,9 @@ import 'dart:io';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wordpress_api/model/survey_drainase_model.dart';
-import 'package:flutter_wordpress_api/model/survey_jalan_model.dart';
-import 'package:flutter_wordpress_api/model/survey_rumah_model.dart';
 import 'package:flutter_wordpress_api/utils/form_helper.dart';
 import 'package:flutter_wordpress_api/utils/list_helper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -114,7 +111,7 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
   }
 
   Future getImage2() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     String fileName = pickedFile.path.split('/').last;
     String fileExt = fileName.split('.').last;
@@ -136,7 +133,7 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
   }
 
   Future getImage3() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     String fileName = pickedFile.path.split('/').last;
     String fileExt = fileName.split('.').last;
@@ -159,7 +156,7 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
   }
 
   Future getImage4() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     String fileName = pickedFile.path.split('/').last;
     String fileExt = fileName.split('.').last;
@@ -210,6 +207,7 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                 children: [
                   Text(
                       "Pendataan Data Drainase yang Ada di Provinsi Sumatera Selatan"),
+
                   //PROVINSI
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,21 +221,14 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedProvinsi,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedProvinsi = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .provinsi
                               .map<DropdownMenuItem<String>>((String value) {
@@ -254,6 +245,18 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedProvinsi,
+                          displayClearIcon: false,
+                          hint: "Pilih Provinsi",
+                          searchHint: "Pilih Provinsi",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedProvinsi = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -271,21 +274,14 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKabupaten,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKabupaten = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kabupaten
                               .map<DropdownMenuItem<String>>((String value) {
@@ -302,6 +298,18 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKabupaten,
+                          displayClearIcon: false,
+                          hint: "Pilih Kabupaten / Kota",
+                          searchHint: "Pilih Kabupaten / Kota",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKabupaten = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -319,21 +327,14 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKecamatan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKecamatan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kecamatan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -350,6 +351,18 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKecamatan,
+                          displayClearIcon: false,
+                          hint: "Pilih Kecamatan",
+                          searchHint: "Pilih Kecamatan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKecamatan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -361,7 +374,7 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                       Container(
                         margin: EdgeInsets.only(top: 12),
                         child: Text(
-                          "*Kelurahan",
+                          "*Kelurahan / Desa",
                           style: TextStyle(color: Colors.black45),
                         ),
                       ),
@@ -393,8 +406,8 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                           }).toList(),
                           value: selectedKelurahan,
                           displayClearIcon: false,
-                          hint: "Pilih kelurahan",
-                          searchHint: "Pilih kelurahan",
+                          hint: "Pilih kelurahan / Desa",
+                          searchHint: "Pilih kelurahan / Desa",
                           validator: (value) =>
                           value == null ? 'Diwajibkan memilih' : null,
                           onChanged: (value) {
@@ -405,7 +418,6 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                           isExpanded: true,
                         ),
                       ),
-
                     ],
                   ),
                   //RW
@@ -533,21 +545,14 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedJenisSaluran,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedJenisSaluran = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .jenisSaluranDrainase
                               .map<DropdownMenuItem<String>>((String value) {
@@ -564,6 +569,18 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedJenisSaluran,
+                          displayClearIcon: false,
+                          hint: "Pilih Jenis Saluran",
+                          searchHint: "Pilih Jenis Saluran",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJenisSaluran = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -581,21 +598,14 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedJenisKonstruksi,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedJenisKonstruksi = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .jenisKonstruksi
                               .map<DropdownMenuItem<String>>((String value) {
@@ -612,6 +622,18 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedJenisKonstruksi,
+                          displayClearIcon: false,
+                          hint: "Pilih Jenis Konstruksi",
+                          searchHint: "Pilih Jenis Konstruksi",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJenisKonstruksi = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -629,21 +651,14 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKondisiKonstruksi,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKondisiKonstruksi = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kondisiKonstruksi
                               .map<DropdownMenuItem<String>>((String value) {
@@ -660,6 +675,18 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKondisiKonstruksi,
+                          displayClearIcon: false,
+                          hint: "Pilih Kondisi Konstruksi",
+                          searchHint: "Pilih Kondisi Konstruksi",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKondisiKonstruksi = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -677,21 +704,14 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedJenisSaluranAtas,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedJenisSaluranAtas = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .jenisSaluranAtas
                               .map<DropdownMenuItem<String>>((String value) {
@@ -708,6 +728,18 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedJenisSaluranAtas,
+                          displayClearIcon: false,
+                          hint: "Pilih Jenis Saluran Atas",
+                          searchHint: "Pilih Jenis Saluran Atas",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJenisSaluranAtas = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -725,21 +757,14 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKondisiAliranDrainase,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKondisiAliranDrainase = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                          value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kondisiAliranDrainase
                               .map<DropdownMenuItem<String>>((String value) {
@@ -756,6 +781,18 @@ class _FormDrainasePageState extends State<FormDrainasePage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKondisiAliranDrainase,
+                          displayClearIcon: false,
+                          hint: "Pilih Kondisi Aliran Drainase",
+                          searchHint: "Pilih Kondisi Aliran Drainase",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKondisiAliranDrainase = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],

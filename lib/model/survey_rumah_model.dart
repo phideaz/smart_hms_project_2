@@ -14,6 +14,7 @@ class Rumah {
     this.nomorRumah,
     this.jalan,
     this.lorongGang,
+    this.ident,
     this.koordinatX,
     this.koordinatY,
     this.namaKkPemilikRumah,
@@ -57,6 +58,7 @@ class Rumah {
   String nomorRumah;
   String jalan;
   String lorongGang;
+  String ident;
   String koordinatX;
   String koordinatY;
   String namaKkPemilikRumah;
@@ -100,6 +102,7 @@ class Rumah {
     nomorRumah: json["nomor_rumah"],
     jalan: json["jalan"],
     lorongGang: json["lorong__gang"],
+    ident: json["ident"],
     koordinatX: json["koordinat_x"],
     koordinatY: json["koordinat__y"],
     namaKkPemilikRumah: json["nama_kk_pemilik_rumah"],
@@ -144,6 +147,7 @@ class Rumah {
     "nomor_rumah": nomorRumah,
     "jalan": jalan,
     "lorong__gang": lorongGang,
+    "ident": ident,
     "koordinat_x": koordinatX,
     "koordinat__y": koordinatY,
     "nama_kk_pemilik_rumah": namaKkPemilikRumah,
@@ -188,6 +192,7 @@ class Rumah {
     "nomor_rumah": rumah.nomorRumah,
     "jalan": rumah.jalan,
     "lorong__gang": rumah.lorongGang,
+    "ident": rumah.ident,
     "koordinat_x": rumah.koordinatX,
     "koordinat__y": rumah.koordinatY,
     "nama_kk_pemilik_rumah": rumah.namaKkPemilikRumah,

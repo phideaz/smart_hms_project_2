@@ -3,11 +3,9 @@ import 'dart:io';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_wordpress_api/model/survey_jalan_model.dart';
-import 'package:flutter_wordpress_api/model/survey_rumah_model.dart';
 import 'package:flutter_wordpress_api/utils/form_helper.dart';
 import 'package:flutter_wordpress_api/utils/list_helper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -109,7 +107,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
   }
 
   Future getImageJalan2() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     String fileName = pickedFile.path.split('/').last;
     String fileExt = fileName.split('.').last;
@@ -131,7 +129,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
   }
 
   Future getImageJalan3() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     String fileName = pickedFile.path.split('/').last;
     String fileExt = fileName.split('.').last;
@@ -154,7 +152,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
   }
 
   Future getImageJalan4() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     String fileName = pickedFile.path.split('/').last;
     String fileExt = fileName.split('.').last;
@@ -217,21 +215,14 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedProvinsi,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedProvinsi = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .provinsi
                               .map<DropdownMenuItem<String>>((String value) {
@@ -248,6 +239,18 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedProvinsi,
+                          displayClearIcon: false,
+                          hint: "Pilih Provinsi",
+                          searchHint: "Pilih Provinsi",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedProvinsi = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -265,21 +268,14 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKabupaten,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKabupaten = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kabupaten
                               .map<DropdownMenuItem<String>>((String value) {
@@ -296,6 +292,18 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKabupaten,
+                          displayClearIcon: false,
+                          hint: "Pilih Kabupaten / Kota",
+                          searchHint: "Pilih Kabupaten / Kota",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKabupaten = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -313,21 +321,14 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKecamatan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKecamatan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kecamatan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -344,6 +345,18 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKecamatan,
+                          displayClearIcon: false,
+                          hint: "Pilih Kecamatan",
+                          searchHint: "Pilih Kecamatan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKecamatan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -355,18 +368,18 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       Container(
                         margin: EdgeInsets.only(top: 12),
                         child: Text(
-                          "*Kelurahan",
+                          "*Kelurahan / Desa",
                           style: TextStyle(color: Colors.black45),
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black.withOpacity(0.2),
-                            width: 1
-                          ),
-                          borderRadius: BorderRadius.circular(5)
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
                         ),
                         child: SearchableDropdown.single(
                           items: ListHelper()
@@ -387,8 +400,8 @@ class _FormJalanPageState extends State<FormJalanPage> {
                           }).toList(),
                           value: selectedKelurahan,
                           displayClearIcon: false,
-                          hint: "Pilih kelurahan",
-                          searchHint: "Pilih kelurahan",
+                          hint: "Pilih kelurahan / Desa",
+                          searchHint: "Pilih kelurahan / Desa",
                           validator: (value) =>
                           value == null ? 'Diwajibkan memilih' : null,
                           onChanged: (value) {
@@ -399,41 +412,6 @@ class _FormJalanPageState extends State<FormJalanPage> {
                           isExpanded: true,
                         ),
                       ),
-                      // Container(
-                      //   margin: EdgeInsets.only(top: 8),
-                      //   child: DropdownButtonFormField(
-                      //     value: selectedKelurahan,
-                      //     hint: Text(
-                      //       '--Select--',
-                      //     ),
-                      //     onChanged: (value) =>
-                      //         setState(() => selectedKelurahan = value),
-                      //     autovalidateMode: AutovalidateMode.onUserInteraction,
-                      //     validator: (value) =>
-                      //         value == null ? 'Diwajibkan memilih' : null,
-                      //     decoration: InputDecoration(
-                      //         border: OutlineInputBorder(
-                      //           borderRadius: BorderRadius.circular(5),
-                      //         ),
-                      //         fillColor: Colors.white),
-                      //     items: ListHelper()
-                      //         .keluarahan
-                      //         .map<DropdownMenuItem<String>>((String value) {
-                      //       return DropdownMenuItem<String>(
-                      //         value: value,
-                      //         child: Container(
-                      //           width: MediaQuery.of(context).size.width *
-                      //               80 /
-                      //               100,
-                      //           child: Text(
-                      //             value,
-                      //             style: TextStyle(fontSize: 14),
-                      //           ),
-                      //         ),
-                      //       );
-                      //     }).toList(),
-                      //   ),
-                      // ),
                     ],
                   ),
                   //RW
@@ -452,7 +430,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       TextFormField(
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
@@ -481,7 +459,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -509,7 +487,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -537,7 +515,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -561,21 +539,14 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedJenisPermukaan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedJenisPermukaan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .jenisPermukaan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -592,38 +563,43 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedJenisPermukaan,
+                          displayClearIcon: false,
+                          hint: "Pilih Jenis Permukaan",
+                          searchHint: "Pilih Jenis Permukaan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJenisPermukaan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
                   ),
-                  //Kondisi
+                  //Kondisi Jalan
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 12),
                         child: Text(
-                          "*Kondisi",
+                          "*Kondisi Jalan",
                           style: TextStyle(color: Colors.black45),
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKondisiJalan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKondisiJalan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kondisiJalan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -640,6 +616,18 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKondisiJalan,
+                          displayClearIcon: false,
+                          hint: "Pilih Kondisi Jalan",
+                          searchHint: "Pilih Kondisi Jalan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKondisiJalan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -657,21 +645,14 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedMemilikiSaluran,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedMemilikiSaluran = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .memilikiSaluran
                               .map<DropdownMenuItem<String>>((String value) {
@@ -688,6 +669,18 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedMemilikiSaluran,
+                          displayClearIcon: false,
+                          hint: "Pilih Memiliki Saluran",
+                          searchHint: "Pilih Memiliki Saluran",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedMemilikiSaluran = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -705,21 +698,14 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedJikaAdaSaluran,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedJikaAdaSaluran = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .jikaAdaSaluran
                               .map<DropdownMenuItem<String>>((String value) {
@@ -736,6 +722,18 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedJikaAdaSaluran,
+                          displayClearIcon: false,
+                          hint: "Pilih Jika Ada Saluran",
+                          searchHint: "Pilih Jika Ada Saluran",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJikaAdaSaluran = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -753,21 +751,14 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedJenisSaluran,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedJenisSaluran = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .jenisSaluran
                               .map<DropdownMenuItem<String>>((String value) {
@@ -784,6 +775,18 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedJenisSaluran,
+                          displayClearIcon: false,
+                          hint: "Pilih Jenis Saluran",
+                          searchHint: "Pilih Jenis Saluran",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJenisSaluran = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -801,21 +804,14 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKondisiSaluran,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKondisiSaluran = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kondisiSaluran
                               .map<DropdownMenuItem<String>>((String value) {
@@ -832,6 +828,18 @@ class _FormJalanPageState extends State<FormJalanPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKondisiSaluran,
+                          displayClearIcon: false,
+                          hint: "Pilih Kondisi Saluran",
+                          searchHint: "Pilih Kondisi Saluran",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKondisiSaluran = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -853,7 +861,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.event_note_outlined),
                             border: OutlineInputBorder(
@@ -881,7 +889,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.event_note_outlined),
                             border: OutlineInputBorder(
@@ -909,7 +917,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.event_note_outlined),
                             border: OutlineInputBorder(
@@ -937,7 +945,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.event_note_outlined),
                             border: OutlineInputBorder(
@@ -965,7 +973,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.event_note_outlined),
                             border: OutlineInputBorder(
@@ -993,7 +1001,7 @@ class _FormJalanPageState extends State<FormJalanPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.event_note_outlined),
                             border: OutlineInputBorder(
@@ -1040,11 +1048,11 @@ class _FormJalanPageState extends State<FormJalanPage> {
                             ),
                             (_imageFotoJalan1 != null)
                                 ? Image.file(
-                                    _imageFotoJalan1,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  )
+                              _imageFotoJalan1,
+                              width: MediaQuery.of(context).size.width,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            )
                                 : SizedBox(),
                           ],
                         ),
@@ -1087,11 +1095,11 @@ class _FormJalanPageState extends State<FormJalanPage> {
                             ),
                             (_imageFotoJalan2 != null)
                                 ? Image.file(
-                                    _imageFotoJalan2,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  )
+                              _imageFotoJalan2,
+                              width: MediaQuery.of(context).size.width,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            )
                                 : SizedBox(),
                           ],
                         ),
@@ -1134,11 +1142,11 @@ class _FormJalanPageState extends State<FormJalanPage> {
                             ),
                             (_imageFotoJalan3 != null)
                                 ? Image.file(
-                                    _imageFotoJalan3,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  )
+                              _imageFotoJalan3,
+                              width: MediaQuery.of(context).size.width,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            )
                                 : SizedBox(),
                           ],
                         ),
@@ -1181,11 +1189,11 @@ class _FormJalanPageState extends State<FormJalanPage> {
                             ),
                             (_imageFotoJalan4 != null)
                                 ? Image.file(
-                                    _imageFotoJalan4,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  )
+                              _imageFotoJalan4,
+                              width: MediaQuery.of(context).size.width,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            )
                                 : SizedBox(),
                           ],
                         ),

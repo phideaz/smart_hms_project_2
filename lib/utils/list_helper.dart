@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class ListHelper {
   List<String> provinsi = ["Sumatera Selatan"];
 
@@ -653,5 +651,43 @@ class ListHelper {
   List<String> kondisiKonstruksi = ["Baik","Rusak Ringan","Rusak Sedang","Rusak Berat"];
   List<String> jenisSaluranAtas = ["Terbuka","Tertutup"];
   List<String> kondisiAliranDrainase = ["Mengalir","Tertutup / Tersumbat","Erosi"];
+
+  //helper sanitasi dropdown
+  List<String> fasilitasSanitasi = [
+    "WC Milik Sendiri",
+    "WC Umum",
+    "Sungai",
+    "Kolam",
+    "Cangkul Tanah"
+  ];
+
+  List<String> bangunanAtas = [
+    "Jamban Duduk",
+    "Jamban Leher Angsa",
+    "Jamban Cemplung",
+    "Jamban Plengsengan",
+    "Jamban Cangkul"
+  ];
+
+  List<String> bangunanBawah = [
+    "Tengki Septik (Septitank)",
+    "Lubang Tanah",
+    "Kolam",
+    "Pipa (Mengalir ke Sungai / langsung ke tanah)"
+  ];
+
+  List<String> pembuanganAirLimbahRt = [
+    "Drainase",
+    "Kolam",
+    "Sungai",
+    "Sekitar Rumah"
+  ];
+
+  List<String> pembuanganSampahRt = [
+    "Tempat Pembuangan Sementara",
+    "Diangkut Mobil Sampah",
+    "Dibakar",
+    "Dibuang ke Sungai"
+  ];
 
 }

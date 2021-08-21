@@ -6,7 +6,6 @@ import 'package:flutter_wordpress_api/model/survey_rumah_model.dart';
 import 'package:flutter_wordpress_api/utils/form_helper.dart';
 import 'package:flutter_wordpress_api/utils/list_helper.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,6 +44,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
   TextEditingController nomorRumahController = TextEditingController();
   TextEditingController jalanController = TextEditingController();
   TextEditingController lorongController = TextEditingController();
+  TextEditingController identController = TextEditingController();
   TextEditingController koordinatXController = TextEditingController();
   TextEditingController koordinatYController = TextEditingController();
   TextEditingController namaKKController = TextEditingController();
@@ -152,7 +152,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
   }
 
   Future getImageKiri() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     String fileName = pickedFile.path.split('/').last;
     String fileExt = fileName.split('.').last;
     print("fileEXT : $fileExt");
@@ -173,7 +173,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
   }
 
   Future getImageBelakang() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     String fileName = pickedFile.path.split('/').last;
     String fileExt = fileName.split('.').last;
     print("fileEXT : $fileExt");
@@ -259,21 +259,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedProvinsi,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedProvinsi = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .provinsi
                               .map<DropdownMenuItem<String>>((String value) {
@@ -290,6 +283,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedProvinsi,
+                          displayClearIcon: false,
+                          hint: "Pilih Provinsi",
+                          searchHint: "Pilih Provinsi",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedProvinsi = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -307,21 +312,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKabupaten,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKabupaten = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kabupaten
                               .map<DropdownMenuItem<String>>((String value) {
@@ -338,6 +336,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKabupaten,
+                          displayClearIcon: false,
+                          hint: "Pilih Kabupaten / Kota",
+                          searchHint: "Pilih Kabupaten / Kota",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKabupaten = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -355,21 +365,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKecamatan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKecamatan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kecamatan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -386,6 +389,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKecamatan,
+                          displayClearIcon: false,
+                          hint: "Pilih Kecamatan",
+                          searchHint: "Pilih Kecamatan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKecamatan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -397,7 +412,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       Container(
                         margin: EdgeInsets.only(top: 12),
                         child: Text(
-                          "*Kelurahan",
+                          "*Kelurahan / Desa",
                           style: TextStyle(color: Colors.black45),
                         ),
                       ),
@@ -429,8 +444,8 @@ class _FormRumahPageState extends State<FormRumahPage> {
                           }).toList(),
                           value: selectedKelurahan,
                           displayClearIcon: false,
-                          hint: "Pilih kelurahan",
-                          searchHint: "Pilih kelurahan",
+                          hint: "Pilih kelurahan / Desa",
+                          searchHint: "Pilih kelurahan / Desa",
                           validator: (value) =>
                           value == null ? 'Diwajibkan memilih' : null,
                           onChanged: (value) {
@@ -459,7 +474,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       TextFormField(
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
@@ -488,7 +503,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -516,7 +531,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -544,7 +559,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -572,7 +587,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -580,6 +595,34 @@ class _FormRumahPageState extends State<FormRumahPage> {
                             ),
                             fillColor: Colors.white),
                         controller: lorongController,
+                      ),
+                    ],
+                  ),
+                  //Ident
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 12),
+                        child: Text(
+                          "*Ident",
+                          style: TextStyle(color: Colors.black45),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) =>
+                        value == '' ? 'Diwajibkan diisi' : null,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.person_rounded),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            fillColor: Colors.white),
+                        controller: identController,
                       ),
                     ],
                   ),
@@ -600,7 +643,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -628,7 +671,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -656,7 +699,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.person_rounded),
                             border: OutlineInputBorder(
@@ -680,21 +723,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedPekerjaan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedPekerjaan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .pekerjaan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -711,6 +747,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedPekerjaan,
+                          displayClearIcon: false,
+                          hint: "Pilih Pekerjaan",
+                          searchHint: "Pilih Pekerjaan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedPekerjaan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -757,7 +805,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.art_track_sharp),
                             border: OutlineInputBorder(
@@ -785,7 +833,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.art_track_sharp),
                             border: OutlineInputBorder(
@@ -809,21 +857,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedFungsiBangunan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedFungsiBangunan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .fungsiBangunan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -840,6 +881,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedFungsiBangunan,
+                          displayClearIcon: false,
+                          hint: "Pilih Fungsi Bangunan",
+                          searchHint: "Pilih Fungsi Bangunan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedFungsiBangunan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -857,21 +910,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedJumlahLntaiBangunan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) => setState(
-                              () => selectedJumlahLntaiBangunan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .jumlahLantaiBangunan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -888,6 +934,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedJumlahLntaiBangunan,
+                          displayClearIcon: false,
+                          hint: "Pilih Jumlah Lantai Bangunan",
+                          searchHint: "Pilih Jumlah Lantai Bangunan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJumlahLntaiBangunan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -905,21 +963,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedJenisBangunan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedJenisBangunan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .jenisBangunan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -936,6 +987,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedJenisBangunan,
+                          displayClearIcon: false,
+                          hint: "Pilih Jenis Bangunan",
+                          searchHint: "Pilih Jenis Bangunan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedJenisBangunan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -953,21 +1016,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedStatusKepemilikanRumah,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) => setState(
-                              () => selectedStatusKepemilikanRumah = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .statusKepemilikanRumah
                               .map<DropdownMenuItem<String>>((String value) {
@@ -984,6 +1040,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedStatusKepemilikanRumah,
+                          displayClearIcon: false,
+                          hint: "Pilih Status Kepemilikan Rumah",
+                          searchHint: "Pilih Status Kepemilikan Rumah",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedStatusKepemilikanRumah = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1001,23 +1069,16 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedStatusKepemilikanTanah,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) => setState(
-                              () => selectedStatusKepemilikanTanah = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
-                              .statusKepemilikanRumah
+                              .statusKepemilikanTanah
                               .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
@@ -1032,6 +1093,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedStatusKepemilikanTanah,
+                          displayClearIcon: false,
+                          hint: "Pilih Status Kepemilikan Tanah",
+                          searchHint: "Pilih Status Kepemilikan Tanah",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedStatusKepemilikanTanah = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1053,7 +1126,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.account_box_sharp),
                             border: OutlineInputBorder(
@@ -1077,21 +1150,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedMaterialAtap,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedMaterialAtap = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .materialAtap
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1108,6 +1174,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedMaterialAtap,
+                          displayClearIcon: false,
+                          hint: "Pilih Material Atap",
+                          searchHint: "Pilih Material Atap",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedMaterialAtap = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1125,21 +1203,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKondisiAtap,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKondisiAtap = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kondisiAtap
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1156,6 +1227,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKondisiAtap,
+                          displayClearIcon: false,
+                          hint: "Pilih Kondisi Atap",
+                          searchHint: "Pilih Kondisi Atap",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKondisiAtap = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1173,21 +1256,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedMaterialLantai,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedMaterialLantai = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .materialLantai
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1204,6 +1280,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedMaterialLantai,
+                          displayClearIcon: false,
+                          hint: "Pilih Material Lantai",
+                          searchHint: "Pilih Material Lantai",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedMaterialLantai = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1221,21 +1309,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKondisiLantai,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKondisiLantai = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kondisiLantai
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1252,6 +1333,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKondisiLantai,
+                          displayClearIcon: false,
+                          hint: "Pilih Kondisi Lantai",
+                          searchHint: "Pilih Kondisi Lantai",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKondisiLantai = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1269,21 +1362,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedMaterialDinding,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedMaterialDinding = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .materialDinding
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1300,38 +1386,43 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedMaterialDinding,
+                          displayClearIcon: false,
+                          hint: "Pilih Material Dinding",
+                          searchHint: "Pilih Material Dinding",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedMaterialDinding = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
                   ),
-                  //Kondisi Material
+                  //Kondisi Material Dinding
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
                         margin: EdgeInsets.only(top: 12),
                         child: Text(
-                          "*Kondisi Material",
+                          "*Kondisi Material Dinding",
                           style: TextStyle(color: Colors.black45),
                         ),
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKondisiMaterial,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKondisiMaterial = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kondisiMaterial
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1348,6 +1439,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKondisiMaterial,
+                          displayClearIcon: false,
+                          hint: "Pilih Kondisi Material Dinding",
+                          searchHint: "Pilih Kondisi Material Dinding",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKondisiMaterial = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1365,21 +1468,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedKondisiRumah,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedKondisiRumah = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .kondisiRumah
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1396,6 +1492,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedKondisiRumah,
+                          displayClearIcon: false,
+                          hint: "Pilih Kondisi Rumah",
+                          searchHint: "Pilih Kondisi Rumah",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedKondisiRumah = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1413,21 +1521,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedPondasi,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedPondasi = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .pondasi
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1444,11 +1545,23 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedPondasi,
+                          displayClearIcon: false,
+                          hint: "Pilih Pondasi",
+                          searchHint: "Pilih Pondasi",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedPondasi = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
                   ),
-                  //Luas Banungan (meter)
+                  //Luas Bangungan (meter)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -1465,7 +1578,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.account_box_sharp),
                             border: OutlineInputBorder(
@@ -1489,21 +1602,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedSubmerListrik,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedSubmerListrik = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .sumberListrik
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1520,6 +1626,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedSubmerListrik,
+                          displayClearIcon: false,
+                          hint: "Pilih Sumber Listrik",
+                          searchHint: "Pilih Sumber Listrik",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedSubmerListrik = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1537,21 +1655,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedSubmerAir,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedSubmerAir = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .sumberAir
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1568,6 +1679,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedSubmerAir,
+                          displayClearIcon: false,
+                          hint: "Pilih Sumber Air",
+                          searchHint: "Pilih Sumber Air",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedSubmerAir = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1589,7 +1712,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: (value) =>
-                            value == '' ? 'Diwajibkan diisi' : null,
+                        value == '' ? 'Diwajibkan diisi' : null,
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.account_box),
                             border: OutlineInputBorder(
@@ -1613,21 +1736,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedSanitasi,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedSanitasi = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .sanitasi
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1644,6 +1760,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedSanitasi,
+                          displayClearIcon: false,
+                          hint: "Pilih Sanitasi",
+                          searchHint: "Pilih Sanitasi",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedSanitasi = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1661,21 +1789,14 @@ class _FormRumahPageState extends State<FormRumahPage> {
                       ),
                       Container(
                         margin: EdgeInsets.only(top: 8),
-                        child: DropdownButtonFormField(
-                          value: selectedPersampahan,
-                          hint: Text(
-                            '--Select--',
-                          ),
-                          onChanged: (value) =>
-                              setState(() => selectedPersampahan = value),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) =>
-                              value == null ? 'Diwajibkan memilih' : null,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              fillColor: Colors.white),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                                width: 1
+                            ),
+                            borderRadius: BorderRadius.circular(5)
+                        ),
+                        child: SearchableDropdown.single(
                           items: ListHelper()
                               .persampahan
                               .map<DropdownMenuItem<String>>((String value) {
@@ -1692,6 +1813,18 @@ class _FormRumahPageState extends State<FormRumahPage> {
                               ),
                             );
                           }).toList(),
+                          value: selectedPersampahan,
+                          displayClearIcon: false,
+                          hint: "Pilih Persampahan",
+                          searchHint: "Pilih Persampahan",
+                          validator: (value) =>
+                          value == null ? 'Diwajibkan memilih' : null,
+                          onChanged: (value) {
+                            setState(() {
+                              selectedPersampahan = value;
+                            });
+                          },
+                          isExpanded: true,
                         ),
                       ),
                     ],
@@ -1757,11 +1890,11 @@ class _FormRumahPageState extends State<FormRumahPage> {
                             ),
                             (_imageTampakDepan != null)
                                 ? Image.file(
-                                    _imageTampakDepan,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  )
+                              _imageTampakDepan,
+                              width: MediaQuery.of(context).size.width,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            )
                                 : SizedBox(),
                           ],
                         ),
@@ -1804,11 +1937,11 @@ class _FormRumahPageState extends State<FormRumahPage> {
                             ),
                             (_imageTampakKanan != null)
                                 ? Image.file(
-                                    _imageTampakKanan,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  )
+                              _imageTampakKanan,
+                              width: MediaQuery.of(context).size.width,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            )
                                 : SizedBox(),
                           ],
                         ),
@@ -1851,11 +1984,11 @@ class _FormRumahPageState extends State<FormRumahPage> {
                             ),
                             (_imageTampakKiri != null)
                                 ? Image.file(
-                                    _imageTampakKiri,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  )
+                              _imageTampakKiri,
+                              width: MediaQuery.of(context).size.width,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            )
                                 : SizedBox(),
                           ],
                         ),
@@ -1898,11 +2031,11 @@ class _FormRumahPageState extends State<FormRumahPage> {
                             ),
                             (_imageTampakBelakang != null)
                                 ? Image.file(
-                                    _imageTampakBelakang,
-                                    width: MediaQuery.of(context).size.width,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  )
+                              _imageTampakBelakang,
+                              width: MediaQuery.of(context).size.width,
+                              height: 150,
+                              fit: BoxFit.cover,
+                            )
                                 : SizedBox(),
                           ],
                         ),

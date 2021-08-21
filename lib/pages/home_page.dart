@@ -1,11 +1,10 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_wordpress_api/model/login_model.dart';
 import 'package:flutter_wordpress_api/model/survey_drainase_model.dart';
 import 'package:flutter_wordpress_api/model/survey_jalan_model.dart';
 import 'package:flutter_wordpress_api/model/survey_rumah_model.dart';
+import 'package:flutter_wordpress_api/pages/form_sanitasi_page.dart';
 import 'package:flutter_wordpress_api/pages/form_drainase_page.dart';
 import 'package:flutter_wordpress_api/pages/form_jalan_page.dart';
 import 'package:flutter_wordpress_api/pages/form_rumah_page.dart';
@@ -73,17 +72,17 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context) => FormRumahPage()));
                       },
                       child: Container(
-                        width: 100,
+                        width: 80,
                         margin:
-                            EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                         padding:
-                            EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                        EdgeInsets.symmetric(vertical: 3, horizontal: 3),
                         child: Column(
                           children: [
                             Container(
-                              width: 60,
-                              height: 60,
-                              color: Colors.grey.withOpacity(0.2),
+                              width: 50,
+                              height: 50,
+                              color: Colors.deepOrange.withOpacity(0.2),
                             ),
                             SizedBox(
                               height: 8,
@@ -101,17 +100,17 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context) => FormJalanPage()));
                       },
                       child: Container(
-                        width: 100,
+                        width: 80,
                         margin:
-                            EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                         padding:
-                            EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                        EdgeInsets.symmetric(vertical: 3, horizontal: 3),
                         child: Column(
                           children: [
                             Container(
-                              width: 60,
-                              height: 60,
-                              color: Colors.grey.withOpacity(0.2),
+                              width: 50,
+                              height: 50,
+                              color: Colors.deepOrange.withOpacity(0.2),
                             ),
                             SizedBox(
                               height: 8,
@@ -129,22 +128,166 @@ class _HomePageState extends State<HomePage> {
                                 builder: (context) => FormDrainasePage()));
                       },
                       child: Container(
-                        width: 100,
+                        width: 80,
                         margin:
-                            EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 8),
                         padding:
-                            EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                        EdgeInsets.symmetric(vertical: 3, horizontal: 3),
                         child: Column(
                           children: [
                             Container(
-                              width: 60,
-                              height: 60,
-                              color: Colors.grey.withOpacity(0.2),
+                              width: 50,
+                              height: 50,
+                              color: Colors.deepOrange.withOpacity(0.2),
                             ),
                             SizedBox(
                               height: 8,
                             ),
                             Text("Drainase")
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FormSanitasiPage()));
+                      },
+                      child: Container(
+                        width: 80,
+                        margin:
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                        padding:
+                        EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              color: Colors.deepOrange.withOpacity(0.2),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Sanitasi")
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FormRumahPage()));
+                      },
+                      child: Container(
+                        width: 80,
+                        margin:
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                        padding:
+                        EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              color: Colors.deepOrange.withOpacity(0.2),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Lampu")
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FormJalanPage()));
+                      },
+                      child: Container(
+                        width: 80,
+                        margin:
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                        padding:
+                        EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              color: Colors.deepOrange.withOpacity(0.2),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Air Bersih")
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FormDrainasePage()));
+                      },
+                      child: Container(
+                        width: 80,
+                        margin:
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                        padding:
+                        EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              color: Colors.deepOrange.withOpacity(0.2),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Jalan")
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FormSanitasiPage()));
+                      },
+                      child: Container(
+                        width: 80,
+                        margin:
+                        EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+                        padding:
+                        EdgeInsets.symmetric(vertical: 3, horizontal: 3),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: 50,
+                              height: 50,
+                              color: Colors.deepOrange.withOpacity(0.2),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text("Lainnya")
                           ],
                         ),
                       ),
