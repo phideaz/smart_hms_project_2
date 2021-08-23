@@ -76,7 +76,7 @@ class Sanitasi {
     "foto_sanitasi_1": fotoSanitasi1,
     "foto_sanitasi_2": fotoSanitasi2,
     "foto_sanitasi_3": fotoSanitasi3,
-    "foto_persampahan_1": fotoSaranaPersampahan1,
+    "foto_sarana_persampahan_1": fotoSaranaPersampahan1,
   };
 
   static Map<String, dynamic> toMap(Sanitasi sanitasi) => {
@@ -96,7 +96,7 @@ class Sanitasi {
     "foto_sanitasi_1": sanitasi.fotoSanitasi1,
     "foto_sanitasi_2": sanitasi.fotoSanitasi2,
     "foto_sanitasi_3": sanitasi.fotoSanitasi3,
-    "foto_persampahan_1": sanitasi.fotoSaranaPersampahan1,
+    "foto_sarana_persampahan_1": sanitasi.fotoSaranaPersampahan1,
   };
 
   static String encode(List<Sanitasi> sanitasis) => json.encode(

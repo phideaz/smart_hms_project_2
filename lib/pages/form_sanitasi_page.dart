@@ -941,20 +941,51 @@ class _FormSanitasiPageState extends State<FormSanitasiPage> {
                         //form is valid, proceed further
                         _formKeySanitasi.currentState
                             .save(); //save once fields are valid, onSaved method invoked for every form fields
-                        if (isKonek == false) {
-                          if (_imageFoto1 != null ||
-                              _imageFoto2 != null) {
-                            final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                            // Fetch and decode data
-                            final String sanitasisString =
-                            prefs.getString('sanitasi_survey');
-                            if (sanitasisString != null) {
-                              final List<Sanitasi> sanitasi =
-                              Sanitasi.decode(sanitasisString);
-                              //TODO aktifkan ketika data db udah ada
-                              //sendDataToDB(sanitasi);
-                              Sanitasi newData = Sanitasi(
+                        if (_imageFoto1 != null ||
+                            _imageFoto2 != null) {
+                          final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                          // Fetch and decode data
+                          final String sanitasisString =
+                          prefs.getString('sanitasi_survey');
+                          if (sanitasisString != null) {
+                            final List<Sanitasi> sanitasi =
+                            Sanitasi.decode(sanitasisString);
+                            //TODO aktifkan ketika data db udah ada
+                            //sendDataToDB(sanitasi);
+                            Sanitasi newData = Sanitasi(
+                                provinsi: selectedProvinsi,
+                                kabupatenKota: selectedKabupaten,
+                                kecamatan: selectedKecamatan,
+                                kelurahanDesa: selectedKelurahan,
+                                rw: rwController.text,
+                                rt: rtController.text,
+                                jumlahKamarMandiWc: jumlahKamarMandiWcController.text,
+                                namaKkPemilikRumah: namaKkPemilikRumahController.text,
+                                fasilitasSanitasi: selectedFasilitasSanitasi,
+                                bangunanAtas: selectedBangunanAtas,
+                                bangunanBawah: selectedBangunanBawah,
+                                pembuanganAirLimbahRt: selectedPembuanganAirLimbahRt,
+                                pembuanganSampahRt: selectedPembuanganSampahRt,
+                                fotoSanitasi1: _imageFoto1.path.toString(),
+                                fotoSanitasi2: _imageFoto2.path.toString(),
+                                fotoSanitasi3: _imageFoto3.path.toString(),
+                                fotoSaranaPersampahan1: _imageFoto4.path.toString());
+                            sanitasi.add(newData);
+                            String oldData = Sanitasi.encode(sanitasi);
+
+                            await prefs.setString('sanitasi_survey', oldData);
+                            print("SIMPAN DATA LOCAL BERHASIL");
+                            FormHelper.showMessage(context, "Survey",
+                                "Berhasil Menyimpan Data", "Ok", () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop();
+                                });
+                          }
+                          // Encode and store data in SharedPreferences
+                          else {
+                            final String encodedData = Sanitasi.encode([
+                              Sanitasi(
                                   provinsi: selectedProvinsi,
                                   kabupatenKota: selectedKabupaten,
                                   kecamatan: selectedKecamatan,
@@ -968,63 +999,28 @@ class _FormSanitasiPageState extends State<FormSanitasiPage> {
                                   bangunanBawah: selectedBangunanBawah,
                                   pembuanganAirLimbahRt: selectedPembuanganAirLimbahRt,
                                   pembuanganSampahRt: selectedPembuanganSampahRt,
-                                  fotoSanitasi1: _imageFoto1.toString(),
-                                  fotoSanitasi2: _imageFoto2.toString(),
-                                  fotoSanitasi3: _imageFoto3.toString(),
-                                  fotoSaranaPersampahan1: _imageFoto4.toString());
-                              sanitasi.add(newData);
-                              String oldData = Sanitasi.encode(sanitasi);
+                                  fotoSanitasi1: _imageFoto1.path.toString(),
+                                  fotoSanitasi2: _imageFoto2.path.toString(),
+                                  fotoSanitasi3: _imageFoto3.path.toString(),
+                                  fotoSaranaPersampahan1: _imageFoto4.path.toString())
+                            ]);
 
-                              await prefs.setString('sanitasi_survey', oldData);
-                              print("SIMPAN DATA LOCAL BERHASIL");
-                              FormHelper.showMessage(context, "Survey",
-                                  "Berhasil Menyimpan Data", "Ok", () {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  });
-                            }
-                            // Encode and store data in SharedPreferences
-                            else {
-                              final String encodedData = Sanitasi.encode([
-                                Sanitasi(
-                                    provinsi: selectedProvinsi,
-                                    kabupatenKota: selectedKabupaten,
-                                    kecamatan: selectedKecamatan,
-                                    kelurahanDesa: selectedKelurahan,
-                                    rw: rwController.text,
-                                    rt: rtController.text,
-                                    jumlahKamarMandiWc: jumlahKamarMandiWcController.text,
-                                    namaKkPemilikRumah: namaKkPemilikRumahController.text,
-                                    fasilitasSanitasi: selectedFasilitasSanitasi,
-                                    bangunanAtas: selectedBangunanAtas,
-                                    bangunanBawah: selectedBangunanBawah,
-                                    pembuanganAirLimbahRt: selectedPembuanganAirLimbahRt,
-                                    pembuanganSampahRt: selectedPembuanganSampahRt,
-                                    fotoSanitasi1: _imageFoto1.toString(),
-                                    fotoSanitasi2: _imageFoto2.toString(),
-                                    fotoSanitasi3: _imageFoto3.toString(),
-                                    fotoSaranaPersampahan1: _imageFoto4.toString())
-                              ]);
-
-                              await prefs.setString(
-                                  'sanitasi_survey', encodedData);
-                              print("SIMPAN DATA LOCAL BERHASIL");
-                              FormHelper.showMessage(context, "Survey",
-                                  "Berhasil Menyimpan Data", "Ok", () {
-                                    Navigator.of(context).pop();
-                                    Navigator.of(context).pop();
-                                  });
-                            }
-                          } else {
-                            FormHelper.showMessage(context, "Peringatan",
-                                "Gambar wajib dimasukkan", "Ok", () {
+                            await prefs.setString(
+                                'sanitasi_survey', encodedData);
+                            print("SIMPAN DATA LOCAL BERHASIL");
+                            FormHelper.showMessage(context, "Survey",
+                                "Berhasil Menyimpan Data", "Ok", () {
+                                  Navigator.of(context).pop();
                                   Navigator.of(context).pop();
                                 });
                           }
+                        } else {
+                          FormHelper.showMessage(context, "Peringatan",
+                              "Gambar wajib dimasukkan", "Ok", () {
+                                Navigator.of(context).pop();
+                              });
                         }
                       }
-                      //KALAU TERDAPAT INTERNET
-                      else {}
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,

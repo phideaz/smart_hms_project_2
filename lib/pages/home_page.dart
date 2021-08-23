@@ -304,7 +304,10 @@ class _HomePageState extends State<HomePage> {
                       builder: (BuildContext context) {
                         return DialogLoading("Check Data");
                       });
-                  checkDataLocal();
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    checkDataLocal();
+
+                  });
                 }, child: Text("Sync"))
               ],
             )
@@ -317,6 +320,7 @@ class _HomePageState extends State<HomePage> {
     // Fetch and decode data
     // prefs.remove('rumah_survey');
     // prefs.remove('drainase_survey');
+    // prefs.remove('sanitasi_survey');
     // prefs.remove('jalan_survey');
 
     final String sanitasisString = prefs.getString('sanitasi_survey');
@@ -371,7 +375,7 @@ class _HomePageState extends State<HomePage> {
       //TODO aktifkan ketika data db udah ada
       sendDataToDBRumah(rumah);
     }
-    if(drainasesString == null && jalansString == null && rumahsString == null){
+    if(drainasesString == null && jalansString == null && rumahsString == null && sanitasisString == null){
       Navigator.pop(context);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Tidak ada data untuk sinkronasi"),
