@@ -83,49 +83,88 @@ class _FormSanitasiPageState extends State<FormSanitasiPage> {
 
     // print("FILE : ${pickedFile.path}");
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFoto1 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFoto1 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
   }
 
   Future getImage2() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFoto2 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFoto2 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
   }
 
   Future getImage3() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFoto3 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFoto3 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
   }
 
   Future getImage4() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
-        _imageFoto4 = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
+    String fileName = pickedFile.path.split('/').last;
+    String fileExt = fileName.split('.').last;
+    print("fileEXT : $fileExt");
+    if(fileExt.toLowerCase() == "jpg" || fileExt.toLowerCase() == "jpeg" || fileExt.toLowerCase() == "png"){
+      setState(() {
+        if (pickedFile != null) {
+          _imageFoto4 = File(pickedFile.path);
+        } else {
+          print('No image selected.');
+        }
+      });
+    }else{
+      FormHelper.showMessage(context, "Upload Gambar", "Harus format jpg, jpeg, atau png", "Ok", (){
+        Navigator.of(context).pop();
+      });
+    }
+
   }
 
   @override
