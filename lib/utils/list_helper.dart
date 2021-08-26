@@ -600,7 +600,8 @@ class ListHelper {
     "Air Gunung",
     "Sumur Gali",
     "Sumur Bor",
-    "PDAM"
+    "PDAM",
+    "PAM / SIMAS"
   ];
 
   List<String> sanitasi = [
@@ -608,7 +609,8 @@ class ListHelper {
     "Sungai",
     "Galian Tanah",
     "Drainase",
-    "Kolam/Danau"
+    "Kolam/Danau",
+    "sungai/abs"
   ];
 
   List<String> persampahan = [

@@ -42,6 +42,7 @@ class Rumah {
     this.jarakSumberAirKePembuanganMeter,
     this.sanitasi,
     this.persampahan,
+    this.masyarakatYangPernahMenerimaBantuan,
     this.email,
     this.gambarRumahTampakDepan,
     this.gambarRumahTampakKanan,
@@ -86,6 +87,7 @@ class Rumah {
   String jarakSumberAirKePembuanganMeter;
   String sanitasi;
   String persampahan;
+  String masyarakatYangPernahMenerimaBantuan;
   String email;
   String gambarRumahTampakDepan;
   String gambarRumahTampakKanan;
@@ -130,6 +132,7 @@ class Rumah {
     jarakSumberAirKePembuanganMeter: json["jarak_sumber_air_ke_pembuangan_meter"],
     sanitasi: json["sanitasi"],
     persampahan: json["persampahan"],
+    masyarakatYangPernahMenerimaBantuan: json["masyarakat_yang_pernah_menerima_bantuan"],
     email: json["email"],
     gambarRumahTampakDepan: json["gambar_rumah_tampak_depan"],
     gambarRumahTampakKanan: json["gambar_rumah_tampak_kanan"],
@@ -175,6 +178,7 @@ class Rumah {
     "jarak_sumber_air_ke_pembuangan_meter": jarakSumberAirKePembuanganMeter,
     "sanitasi": sanitasi,
     "persampahan": persampahan,
+    "masyarakat_yang_pernah_menerima_bantuan": masyarakatYangPernahMenerimaBantuan,
     "email": email,
     "gambar_rumah_tampak_depan": gambarRumahTampakDepan,
     "gambar_rumah_tampak_kanan": gambarRumahTampakKanan,
@@ -220,6 +224,7 @@ class Rumah {
     "jarak_sumber_air_ke_pembuangan_meter": rumah.jarakSumberAirKePembuanganMeter,
     "sanitasi": rumah.sanitasi,
     "persampahan": rumah.persampahan,
+    "masyarakat_yang_pernah_menerima_bantuan": rumah.masyarakatYangPernahMenerimaBantuan,
     "email": rumah.email,
     "gambar_rumah_tampak_depan": rumah.gambarRumahTampakDepan,
     "gambar_rumah_tampak_kanan": rumah.gambarRumahTampakKanan,

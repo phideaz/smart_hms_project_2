@@ -54,6 +54,7 @@ class _FormRumahPageState extends State<FormRumahPage> {
   TextEditingController penghasilanController = TextEditingController();
   TextEditingController luasBangunanController = TextEditingController();
   TextEditingController jarakSumberAirController = TextEditingController();
+  TextEditingController masyarakatYangPernahMenerimaBantuanController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
   File _imageTampakDepan,
@@ -1826,6 +1827,34 @@ class _FormRumahPageState extends State<FormRumahPage> {
                           },
                           isExpanded: true,
                         ),
+                      ),
+                    ],
+                  ),
+                  // Masyarakat yang Pernah Menerima Bantuan
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(top: 12),
+                        child: Text(
+                          "*Masyarakat yang Pernah Menerima Bantuan",
+                          style: TextStyle(color: Colors.black45),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) =>
+                        value == '' ? 'Diwajibkan diisi' : null,
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.account_box),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            fillColor: Colors.white),
+                        controller: masyarakatYangPernahMenerimaBantuanController,
                       ),
                     ],
                   ),
