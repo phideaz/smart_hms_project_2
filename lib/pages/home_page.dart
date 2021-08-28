@@ -496,6 +496,7 @@ class _HomePageState extends State<HomePage> {
         imageUploadRequest.fields['jarak_sumber_air_ke_pembuangan_meter'] = rumahs[i].jarakSumberAirKePembuanganMeter == null ? '' : rumahs[i].jarakSumberAirKePembuanganMeter;
         imageUploadRequest.fields['sanitasi'] = rumahs[i].sanitasi == null ? '' : rumahs[i].sanitasi;
         imageUploadRequest.fields['persampahan'] = rumahs[i].persampahan == null ? '' : rumahs[i].persampahan;
+        imageUploadRequest.fields['masyarakat_yang_pernah_menerima_bantuan'] = rumahs[i].masyarakatYangPernahMenerimaBantuan == null ? '' : rumahs[i].masyarakatYangPernahMenerimaBantuan;
         imageUploadRequest.fields['email'] = rumahs[i].email == null ? '' : rumahs[i].email;
 
 
